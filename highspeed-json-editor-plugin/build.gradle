@@ -1,0 +1,33 @@
+apply plugin: 'java'
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.2'
+    
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.2'
+    
+
+}
+
+task cleanLibraries (type: Delete) {
+    group "highspeed-json-editor"
+
+    delete fileTree('libs/external') {
+        include '**/*.jar'
+    }
+}
+
+/** copies library dependencies to plugin project, so plugin project eclipse setup 
+ *  is not changed by gradle , but the dependencies are just copied while doing a cleanEclipse eclipse ...  */
+task provideLibraries(type: Copy, dependsOn: cleanLibraries){
+    group "highspeed-json-editor"
+    
+from configurations.compile
+    into "${project.projectDir}/lib/external"
+}

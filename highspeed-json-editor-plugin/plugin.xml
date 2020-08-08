@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          KEYWORDS                                    -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <extension point="org.eclipse.ui.keywords">
+     <keyword
+   		id="jsoneditor.preferences.keyword.json"
+   		label="json">
+     </keyword>
+      <keyword
+   		id="jsoneditor.preferences.keyword.color"
+   		label="color">
+     </keyword>
+     <keyword
+   		id="jsoneditor.preferences.keyword.editor"
+   		label="editor">
+     </keyword>
+     <keyword
+   		id="jsoneditor.preferences.keyword.validation"
+   		label="validation">
+     </keyword>
+    
+   </extension>
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          EDITOR                                      -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+      		name="HighspeedJSON Editor"
+            extensions="json,JSON"
+            icon="icons/json-editor.png"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="de.jcup.jsoneditor.HighspeedJSONEditor"
+            id="jsoneditor.editors.HighspeedJSONEditor">
+      </editor>
+   </extension>
+   
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          MARKER                          			 -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --> 
+   <extension 
+   		id="de.jcup.jsoneditor.script.problem"
+    	point="org.eclipse.core.resources.markers"
+    	name="HighspeedJSONeditor script problem">
+        <super type="org.eclipse.core.resources.problemmarker"/>
+        <super type="org.eclipse.core.resources.textmarker"/>
+        <persistent value="false"/>
+    </extension>
+   
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          CONTEXT                                     -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <extension point="org.eclipse.ui.contexts">
+	  <context
+	        name="HighspeedJSON context"
+	        description="Editing json files"
+	        parentId="org.eclipse.ui.textEditorScope"
+	        id="org.jsoneditor.editors.HighspeedJSONEditor.context">
+	        
+	  </context>
+   </extension>
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          COMMANDS                                    -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->^
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            description="HighspeedJSON editor"
+            id="jsoneditor.commands.category"
+            name="HighspeedJSON editor">
+      </category>
+   </extension>
+   
+   <extension point="org.eclipse.ui.commands">
+   	   <command
+            name="Quick outline"
+            description="Show quick outline dialog"
+            categoryId="jsoneditor.commands.category"
+            id="jsoneditor.editor.commands.quickoutline">
+      </command>
+      <command
+            name="Format JSON"
+            description="Format JSON content"
+            categoryId="jsoneditor.commands.category"
+            id="jsoneditor.editor.commands.source.formatJSON">
+      </command>
+     
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+	 <handler
+            commandId="jsoneditor.editor.commands.quickoutline"
+            class="de.jcup.jsoneditor.handlers.OpenQuickOutlineHandler">
+      </handler>
+      <handler
+            commandId="jsoneditor.editor.commands.source.formatJSON"
+            class="de.jcup.jsoneditor.handlers.FormatJSONHandler">
+      </handler>
+    </extension> 
+    
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          KEY BINDING                                 -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <extension point="org.eclipse.ui.bindings">
+   		<key
+            sequence="M1+O"
+            contextId="org.jsoneditor.editors.HighspeedJSONEditor.context"
+            commandId="jsoneditor.editor.commands.quickoutline"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">	  
+		</key>
+		<key
+            sequence="M1+F"
+            contextId="org.jsoneditor.editors.HighspeedJSONEditor.context"
+            commandId="jsoneditor.editor.commands.source.formatJSON"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">	  
+		</key>
+    </extension> 
+    
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          MENU                                 -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.jsoneditor.editors.HighspeedJSONEditor.context?after=additions">
+         <command
+               commandId="jsoneditor.editor.commands.quickoutline"
+               >
+         </command>
+      </menuContribution>
+      
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=edit">
+            
+         <menu
+               id="jsoneditor.editor.menu.sourceMenu"
+               label="Source"
+               mnemonic="S"
+               >
+               <visibleWhen checkEnabled="true">
+                     <with variable="activeEditor">
+                     	<instanceof
+                            value="de.jcup.jsoneditor.HighspeedJSONEditor"/>
+                     </with>
+               </visibleWhen>
+            <command commandId="jsoneditor.editor.commands.source.formatJSON">
+            </command>
+         </menu>
+      </menuContribution>
+      
+      </extension> 
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          PREFERENCES                                 -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <extension
+      point = "org.eclipse.ui.preferencePages">
+      <page
+         id="jsoneditor.eclipse.gradleeditor.preferences.HighspeedJSONEditorEditorPreferencePage"
+         class="de.jcup.jsoneditor.preferences.HighspeedJSONEditorPreferencePage"
+         name="HighspeedJSON Editor"
+         >
+         <keywordReference
+               id="jsoneditor.preferences.keyword.json">
+         </keywordReference>
+          <keywordReference
+               id="jsoneditor.preferences.keyword.editor">
+         </keywordReference>
+      </page>
+    </extension>
+    <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="de.jcup.jsoneditor.preferences.HighspeedJSONEditorPreferenceInitializer">
+      </initializer>
+   </extension>
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          MARKER                          			 -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --> 
+   <extension 
+   		id="de.jcup.jsoneditor.error.marker"
+    	point="org.eclipse.core.resources.markers"
+    	name="HighspeedJSON editor error marker">
+        <super type="org.eclipse.core.resources.problemmarker"/>
+        <super type="org.eclipse.core.resources.textmarker"/>
+        <persistent value="true"/>
+    </extension>
+    
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          HELP                                         -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml">
+      </toc>
+      <toc
+            file="EditorToc.xml"
+            primary="true">
+      </toc>
+   </extension>
+   
+</plugin>
