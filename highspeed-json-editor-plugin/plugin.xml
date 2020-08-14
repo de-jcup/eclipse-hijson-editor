@@ -6,19 +6,23 @@
    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
    <extension point="org.eclipse.ui.keywords">
      <keyword
-   		id="jsoneditor.preferences.keyword.json"
+   		id="de.jcup.hijson.preferences.keyword.json"
    		label="json">
      </keyword>
       <keyword
-   		id="jsoneditor.preferences.keyword.color"
+        id="de.jcup.hijson.preferences.keyword.hijson"
+        label="hijson">
+     </keyword>
+      <keyword
+   		id="de.jcup.hijson.preferences.keyword.color"
    		label="color">
      </keyword>
      <keyword
-   		id="jsoneditor.preferences.keyword.editor"
+   		id="de.jcup.hijson.preferences.keyword.editor"
    		label="editor">
      </keyword>
      <keyword
-   		id="jsoneditor.preferences.keyword.validation"
+   		id="de.jcup.hijson.preferences.keyword.validation"
    		label="validation">
      </keyword>
     
@@ -29,33 +33,21 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-      		name="HighspeedJSON Editor"
+      		name="HiJSON Editor"
             extensions="json,JSON"
-            icon="icons/json-editor.png"
+            icon="icons/highspeed-json-editor.png"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
-            class="de.jcup.jsoneditor.HighspeedJSONEditor"
+            class="de.jcup.hijson.HighspeedJSONEditor"
             id="jsoneditor.editors.HighspeedJSONEditor">
       </editor>
    </extension>
-   
-    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-   <!--                          MARKER                          			 -->
-   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --> 
-   <extension 
-   		id="de.jcup.jsoneditor.script.problem"
-    	point="org.eclipse.core.resources.markers"
-    	name="HighspeedJSONeditor script problem">
-        <super type="org.eclipse.core.resources.problemmarker"/>
-        <super type="org.eclipse.core.resources.textmarker"/>
-        <persistent value="false"/>
-    </extension>
    
    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
    <!--                          CONTEXT                                     -->
    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
    <extension point="org.eclipse.ui.contexts">
 	  <context
-	        name="HighspeedJSON context"
+	        name="HiJSON context"
 	        description="Editing json files"
 	        parentId="org.eclipse.ui.textEditorScope"
 	        id="org.jsoneditor.editors.HighspeedJSONEditor.context">
@@ -68,9 +60,9 @@
    <extension
          point="org.eclipse.ui.commands">
       <category
-            description="HighspeedJSON editor"
+            description="HiJSON editor"
             id="jsoneditor.commands.category"
-            name="HighspeedJSON editor">
+            name="HiJSON editor">
       </category>
    </extension>
    
@@ -87,16 +79,36 @@
             categoryId="jsoneditor.commands.category"
             id="jsoneditor.editor.commands.source.formatJSON">
       </command>
+      <command
+            name="Validate JSON"
+            description="V JSON content"
+            categoryId="jsoneditor.commands.category"
+            id="jsoneditor.editor.commands.source.validateJSON">
+      </command>
+      <command
+            name="Goto matching bracket"
+            description="Goto matching bracket inside gradle document"
+            categoryId="jsoneditor.commands.category"
+            id="jsoneditor.editor.commands.gotomatchingbracket">
+      </command>
      
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	 <handler
             commandId="jsoneditor.editor.commands.quickoutline"
-            class="de.jcup.jsoneditor.handlers.OpenQuickOutlineHandler">
+            class="de.jcup.hijson.handlers.OpenQuickOutlineHandler">
       </handler>
       <handler
             commandId="jsoneditor.editor.commands.source.formatJSON"
-            class="de.jcup.jsoneditor.handlers.FormatJSONHandler">
+            class="de.jcup.hijson.handlers.FormatJSONHandler">
+      </handler>
+       <handler
+            commandId="jsoneditor.editor.commands.source.validateJSON"
+            class="de.jcup.hijson.handlers.ValidateJSONHandler">
+      </handler>
+       <handler
+            commandId="jsoneditor.editor.commands.gotomatchingbracket"
+            class="de.jcup.hijson.handlers.GotoMatchingBracketHandler">
       </handler>
     </extension> 
     
@@ -111,9 +123,15 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">	  
 		</key>
 		<key
-            sequence="M1+F"
+            sequence="M1+M2+F"
             contextId="org.jsoneditor.editors.HighspeedJSONEditor.context"
             commandId="jsoneditor.editor.commands.source.formatJSON"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">	  
+		</key>
+		<key
+            sequence="M1+M2+P"
+            contextId="org.jsoneditor.editors.HighspeedJSONEditor.context"
+            commandId="jsoneditor.editor.commands.gotomatchingbracket"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">	  
 		</key>
     </extension> 
@@ -124,10 +142,12 @@
     <extension point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="popup:org.jsoneditor.editors.HighspeedJSONEditor.context?after=additions">
-         <command
-               commandId="jsoneditor.editor.commands.quickoutline"
-               >
-         </command>
+            <command commandId="jsoneditor.editor.commands.quickoutline">
+            </command>
+            <command commandId="jsoneditor.editor.commands.source.formatJSON">
+            </command>
+            <command commandId="jsoneditor.editor.commands.source.validateJSON">
+            </command>
       </menuContribution>
       
       <menuContribution
@@ -141,10 +161,14 @@
                <visibleWhen checkEnabled="true">
                      <with variable="activeEditor">
                      	<instanceof
-                            value="de.jcup.jsoneditor.HighspeedJSONEditor"/>
+                            value="de.jcup.hijson.HighspeedJSONEditor"/>
                      </with>
                </visibleWhen>
             <command commandId="jsoneditor.editor.commands.source.formatJSON">
+            </command>
+            <command commandId="jsoneditor.editor.commands.source.validateJSON">
+            </command>
+            <command commandId="jsoneditor.editor.commands.gotomatchingbracket">
             </command>
          </menu>
       </menuContribution>
@@ -156,31 +180,58 @@
    <extension
       point = "org.eclipse.ui.preferencePages">
       <page
-         id="jsoneditor.eclipse.gradleeditor.preferences.HighspeedJSONEditorEditorPreferencePage"
-         class="de.jcup.jsoneditor.preferences.HighspeedJSONEditorPreferencePage"
-         name="HighspeedJSON Editor"
+         id="de.jcup.hijson.eclipse.preferences.HighspeedJSONEditorEditorPreferencePage"
+         class="de.jcup.hijson.preferences.HighspeedJSONEditorPreferencePage"
+         name="HiJSON Editor"
          >
          <keywordReference
-               id="jsoneditor.preferences.keyword.json">
+               id="de.jcup.hijson.preferences.keyword.json">
+         </keywordReference>
+         <keywordReference
+               id="de.jcup.hijson.preferences.keyword.hijson">
          </keywordReference>
           <keywordReference
-               id="jsoneditor.preferences.keyword.editor">
+               id="de.jcup.hijson.preferences.keyword.editor">
+         </keywordReference>
+      </page>
+      <page
+         id="de.jcup.hijson.eclipse.preferences.HighspeedJSONEditorEditorSyntaxColorPreferencePage"
+         class="de.jcup.hijson.preferences.HighspeedJSONEditorSyntaxColorPreferencePage"
+         name="Syntax coloring"
+         category="de.jcup.hijson.eclipse.preferences.HighspeedJSONEditorEditorPreferencePage">
+         <keywordReference
+               id="de.jcup.hijson.preferences.keyword.json">
+         </keywordReference>
+         <keywordReference
+               id="de.jcup.hijson.preferences.keyword.hijson">
+         </keywordReference>
+          <keywordReference
+               id="batcheditor.preferences.keyword.color">
          </keywordReference>
       </page>
     </extension>
     <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="de.jcup.jsoneditor.preferences.HighspeedJSONEditorPreferenceInitializer">
+            class="de.jcup.hijson.preferences.HighspeedJSONEditorPreferenceInitializer">
       </initializer>
    </extension>
    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
    <!--                          MARKER                          			 -->
    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --> 
    <extension 
-   		id="de.jcup.jsoneditor.error.marker"
+        id="de.jcup.hijson.info.marker"
+        point="org.eclipse.core.resources.markers"
+        name="HiJSON info marker">
+        <super type="org.eclipse.core.resources.problemmarker"/>
+        <super type="org.eclipse.core.resources.textmarker"/>
+        <persistent value="false"/>
+    </extension>
+   
+   <extension 
+   		id="de.jcup.hijson.error.marker"
     	point="org.eclipse.core.resources.markers"
-    	name="HighspeedJSON editor error marker">
+    	name="HiJSON editor error marker">
         <super type="org.eclipse.core.resources.problemmarker"/>
         <super type="org.eclipse.core.resources.textmarker"/>
         <persistent value="true"/>

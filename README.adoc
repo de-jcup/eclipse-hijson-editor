@@ -1,0 +1,20 @@
+== About
+
+*HiJSON Editor* _(highspeed JSON eclipse editor plugin)_ is a specialized eclipse plugin to handle bigger JSON files in a very performant /fast way.
+
+The project page can be found at https://github.com/de-jcup/eclipse-hijson-editor
+
+WARNING: Current status: Alpha
+
+
+== Why is this editor faster than other eclipse plugins for JSON editor?
+
+- One liners having more than x (x=currently 1000 characters but not at least 
+  5 new line characters, will be automatically pretty printed. 
+  This will extremely speed up editor behaviour! +
+  (This DOES CHANGE the file inside editor - but not on disk, except when you save it...)
+- Outline will be disabled per default and must be enabled when needed (in outline view), so
+  no unnecessary tree build
+- Some optimizations in rendering etc.
+- Special document handling, partitioning etc.
+- Uses https://github.com/FasterXML/jackson to do JSON operations, so very fast 
