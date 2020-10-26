@@ -72,6 +72,7 @@ public class HighspeedJSONEditorPreferencePage extends FieldEditorPreferencePage
 	private boolean highlightBracketAtCaretLocation;
 	private boolean matchingBrackets;
 	private BooleanFieldEditor allowComments;
+	private BooleanFieldEditor allowUnquotedControlChars;
 	private BooleanFieldEditor validateOnSave;
 	private BooleanFieldEditor autoCreateEndBrackets;
 	private BooleanFieldEditor codeAssistWithHighspeedJSONKeywords;
@@ -100,8 +101,8 @@ public class HighspeedJSONEditorPreferencePage extends FieldEditorPreferencePage
 			setBoolean(P_EDITOR_MATCHING_BRACKETS_ENABLED, matchingBrackets);
 			setBoolean(P_EDITOR_HIGHLIGHT_BRACKET_AT_CARET_LOCATION, highlightBracketAtCaretLocation);
 			setBoolean(P_EDITOR_ENCLOSING_BRACKETS, enclosingBrackets);
-			
-			HighspeedJSONEditorUtil.refreshAllowCommentsState();
+
+			HighspeedJSONEditorUtil.refreshParserSettings();
 		}
 		return ok;
 	}
@@ -147,6 +148,13 @@ public class HighspeedJSONEditorPreferencePage extends FieldEditorPreferencePage
 		allowComments.getDescriptionControl(otherComposite)
 		.setToolTipText("When enabled comments are allowed");
 		addField(allowComments);
+
+		/* parsing, allow newlines in strings */
+		allowUnquotedControlChars = new BooleanFieldEditor(P_EDITOR_ALLOW_UNQUOTED_CONTROL_CHARS.getId(),
+		        "Allow unquoted control characters", otherComposite);
+		allowUnquotedControlChars.getDescriptionControl(otherComposite)
+		.setToolTipText("When enabled, unquoted control characters (newlines, tabs, etc.) in strings are allowed");
+		addField(allowUnquotedControlChars);
 
 		/* validate */
 		validateOnSave = new BooleanFieldEditor(P_VALIDATE_ON_SAVE.getId(),

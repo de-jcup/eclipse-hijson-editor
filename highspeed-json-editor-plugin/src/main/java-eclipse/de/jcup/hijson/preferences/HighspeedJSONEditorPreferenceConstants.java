@@ -25,6 +25,7 @@ public enum HighspeedJSONEditorPreferenceConstants implements PreferenceIdentifi
 	
 	P_EDITOR_MATCHING_BRACKETS_ENABLED("matchingBrackets"),
 	P_EDITOR_ALLOW_COMMENTS_ENABLED("allowComments"),
+	P_EDITOR_ALLOW_UNQUOTED_CONTROL_CHARS("allowUnquotedControlChars"),
 	P_EDITOR_HIGHLIGHT_BRACKET_AT_CARET_LOCATION("highlightBracketAtCaretLocation"),
 	P_EDITOR_ENCLOSING_BRACKETS("enclosingBrackets"),
 	P_EDITOR_MATCHING_BRACKETS_COLOR("matchingBracketsColor"),
