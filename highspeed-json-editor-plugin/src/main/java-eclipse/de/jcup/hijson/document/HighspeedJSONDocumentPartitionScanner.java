@@ -40,11 +40,16 @@ public class HighspeedJSONDocumentPartitionScanner extends RuleBasedPartitionSca
 		IToken comment = createToken(COMMENT);
 		IToken doubleString = createToken(STRING);
 		IToken nullValue = createToken(NULL);
+		IToken key= createToken(KEY);
+		IToken bool= createToken(BOOLEAN);
 
 		List<IPredicateRule> rules = new ArrayList<>();
+		rules.add(new JSONKeyRule(key));
 		rules.add(new SingleLineRule("\"", "\"", doubleString, '\\' , true));
 		rules.add(new SingleLineRule("//", "", comment, (char) -1, true));
 		rules.add(new MultiLineRule("/*", "*/", comment, (char)-1, true));
+		rules.add(new WordPatternRule(onlyLettersKeyWordDetector,"false", "", bool));
+		rules.add(new WordPatternRule(onlyLettersKeyWordDetector,"true", "", bool));
 		rules.add(new WordPatternRule(onlyLettersKeyWordDetector,"null", "", nullValue));
 
 		setPredicateRules(rules.toArray(new IPredicateRule[rules.size()]));

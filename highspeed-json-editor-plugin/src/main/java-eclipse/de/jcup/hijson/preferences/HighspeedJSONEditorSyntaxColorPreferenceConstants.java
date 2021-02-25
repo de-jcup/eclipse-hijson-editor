@@ -19,10 +19,18 @@ package de.jcup.hijson.preferences;
  * Constant definitions for plug-in preferences
  */
 public enum HighspeedJSONEditorSyntaxColorPreferenceConstants implements PreferenceIdentifiable, PreferenceLabeled{
-	COLOR_NORMAL_TEXT("colorNormalText","Normal text color"),
-	COLOR_STRING("colorDoubleStrings", "Double quoted strings"),
+	
+    COLOR_NORMAL_TEXT("colorNormalText","Normal text color"),
+	
+    COLOR_KEY("colorKey", "Keys"),
+
+    COLOR_STRING("colorDoubleStrings", "Double quoted strings"),
+
 	COLOR_COMMENT("colorComments", "Comment"),
+	
 	COLOR_NULL("colorNull", "Null"),
+	
+	COLOR_BOOLEAN("colorBoolean", "Boolean"),
 	
 	;
 

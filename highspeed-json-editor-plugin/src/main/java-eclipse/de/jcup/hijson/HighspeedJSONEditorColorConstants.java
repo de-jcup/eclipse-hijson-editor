@@ -95,6 +95,11 @@ public interface HighspeedJSONEditorColorConstants {
 	 * A special dark cyan color for echo outputs on dark themes
 	 */
 	public static final RGB DARK_THEME_ECHO_OUTPUT = rgb(49,98,98);
+	
+	
+	public static final RGB DARK_THEME_LIGHT_BLUE = rgb(114,159,207);
+
+    public static final RGB DARK_THEME_LIGHT_ORANGE = rgb(233,185,110);
 
 	public static RGB rgb(int r, int g, int b) {
 		return new RGB(r, g, b);

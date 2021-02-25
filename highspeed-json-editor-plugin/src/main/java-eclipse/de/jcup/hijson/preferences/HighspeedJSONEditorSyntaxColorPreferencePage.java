@@ -67,7 +67,9 @@ public class HighspeedJSONEditorSyntaxColorPreferencePage extends FieldEditorPre
 				changeColor(editorMap, COLOR_STRING, HighspeedJSONEditorColorConstants.MIDDLE_ORANGE);
 				changeColor(editorMap, COLOR_COMMENT, HighspeedJSONEditorColorConstants.GREEN_JAVA);
 				changeColor(editorMap, COLOR_NULL, HighspeedJSONEditorColorConstants.BRIGHT_CYAN);
-				
+
+				changeColor(editorMap, COLOR_KEY, HighspeedJSONEditorColorConstants.DARK_THEME_LIGHT_BLUE);
+				changeColor(editorMap, COLOR_BOOLEAN, HighspeedJSONEditorColorConstants.DARK_THEME_LIGHT_ORANGE);
 				
 			}
 

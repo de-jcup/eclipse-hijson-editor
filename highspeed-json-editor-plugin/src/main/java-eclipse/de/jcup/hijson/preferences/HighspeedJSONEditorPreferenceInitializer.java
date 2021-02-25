@@ -25,6 +25,8 @@ import static de.jcup.hijson.preferences.HighspeedJSONEditorSyntaxColorPreferenc
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 
+import de.jcup.hijson.HighspeedJSONEditorColorConstants;
+
 /**
  * Class used to initialize default preference values.
  */
@@ -58,11 +60,13 @@ public class HighspeedJSONEditorPreferenceInitializer extends AbstractPreference
         preferences.setDefaultColor(COLOR_NORMAL_TEXT, BLACK);
         preferences.setDefaultColor(COLOR_COMMENT, GREEN_JAVA);
         preferences.setDefaultColor(COLOR_STRING, DARK_BLUE);
-        preferences.setDefaultColor(COLOR_NULL, KEYWORD_DEFAULT_PURPLE);
+        preferences.setDefaultColor(COLOR_NULL, DARK_GRAY);
+
+        preferences.setDefaultColor(COLOR_KEY, HighspeedJSONEditorColorConstants.KEYWORD_DEFAULT_PURPLE);
+        preferences.setDefaultColor(COLOR_BOOLEAN, DARK_GREEN);
 		
 		/* bracket color */
 		preferences.setDefaultColor(P_EDITOR_MATCHING_BRACKETS_COLOR, GRAY_JAVA);
-		preferences.setDefaultColor(HighspeedJSONEditorSyntaxColorPreferenceConstants.COLOR_NULL, GRAY_JAVA);
 		
 		/* +++++++++++++++++++ */
 		/* + Code Assistence + */

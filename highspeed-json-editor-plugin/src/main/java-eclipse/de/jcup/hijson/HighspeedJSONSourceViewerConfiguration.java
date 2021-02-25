@@ -145,6 +145,10 @@ public class HighspeedJSONSourceViewerConfiguration extends TextSourceViewerConf
 		addPresentation(reconciler, COMMENT.getId(), getPreferences().getColor(COLOR_COMMENT),SWT.NONE);
 
 		addPresentation(reconciler, NULL.getId(), getPreferences().getColor(COLOR_NULL),SWT.NONE);
+
+		addPresentation(reconciler, KEY.getId(), getPreferences().getColor(COLOR_KEY),SWT.NONE);
+
+		addPresentation(reconciler, BOOLEAN.getId(), getPreferences().getColor(COLOR_BOOLEAN),SWT.NONE);
 		
 		return reconciler;
 	}

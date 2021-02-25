@@ -17,11 +17,16 @@
 
 public enum HighspeedJSONDocumentIdentifiers implements HighspeedJSONDocumentIdentifier {
 	
+    KEY,
+    
 	COMMENT,
 	
 	STRING,
 	
 	NULL,
+	
+	BOOLEAN,
+	
 	
 	;
 

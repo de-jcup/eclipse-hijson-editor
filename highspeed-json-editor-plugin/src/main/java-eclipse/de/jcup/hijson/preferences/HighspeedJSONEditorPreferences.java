@@ -20,10 +20,17 @@ import static de.jcup.hijson.preferences.HighspeedJSONEditorPreferenceConstants.
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import de.jcup.hijson.ColorUtil;
+import de.jcup.hijson.EclipseUtil;
+import de.jcup.hijson.HighspeedJSONEditor;
 import de.jcup.hijson.HighspeedJSONEditorActivator;
 
 public class HighspeedJSONEditorPreferences {
@@ -33,7 +40,65 @@ public class HighspeedJSONEditorPreferences {
 
 	private HighspeedJSONEditorPreferences() {
 		store = new ScopedPreferenceStore(InstanceScope.INSTANCE, HighspeedJSONEditorActivator.PLUGIN_ID);
+		store.addPropertyChangeListener(new IPropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent event) {
+                if (event == null) {
+                    return;
+                }
+                String property = event.getProperty();
+                if (property == null) {
+                    return;
+                }
+                ChangeContext context = new ChangeContext();
+                for (HighspeedJSONEditorSyntaxColorPreferenceConstants c : HighspeedJSONEditorSyntaxColorPreferenceConstants.values()) {
+                    if (property.equals(c.getId())) {
+                        context.colorChanged = true;
+                        break;
+                    }
+                }
+                updateColorsInYamlEditors(context);
+
+            }
+
+            private void updateColorsInYamlEditors(ChangeContext context) {
+                if (!context.hasChanges()) {
+                    return;
+                }
+                /* inform all Yaml editors about color changes */
+                IWorkbenchPage activePage = EclipseUtil.getActivePage();
+                if (activePage == null) {
+                    return;
+                }
+                IEditorReference[] references = activePage.getEditorReferences();
+                for (IEditorReference ref : references) {
+                    IEditorPart editor = ref.getEditor(false);
+                    if (editor == null) {
+                        continue;
+                    }
+                    if (!(editor instanceof HighspeedJSONEditor)) {
+                        continue;
+                    }
+                    HighspeedJSONEditor geditor = (HighspeedJSONEditor) editor;
+                    if (context.colorChanged){
+                        geditor.handleColorSettingsChanged();
+                    }
+                }
+            }
+        });
 	}
+	
+	private class ChangeContext {
+        private boolean colorChanged = false;
+        private boolean validationChanged = false;
+
+        private boolean hasChanges() {
+            boolean changedAtAll = colorChanged;
+            changedAtAll = changedAtAll || validationChanged;
+            return changedAtAll;
+        }
+    }
 
 	public String getStringPreference(HighspeedJSONEditorPreferenceConstants id) {
 		String data = getPreferenceStore().getString(id.getId());
