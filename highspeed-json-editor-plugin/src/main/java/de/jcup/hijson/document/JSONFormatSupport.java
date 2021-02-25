@@ -67,6 +67,14 @@ public class JSONFormatSupport {
         }
     }
 
+    public void setAllowUnquotedControlChars(boolean allowNewlines) {
+        if (allowNewlines) {
+            mapper.enable(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS);
+        } else {
+            mapper.disable(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS);
+        }
+    }
+
     public FormatterResult formatJSONIfNotHavingMinAmountOfNewLines(String str) {
         return formatJSONIfNotHavingMinAmountOfNewLines(str, 3, 1000);
     }

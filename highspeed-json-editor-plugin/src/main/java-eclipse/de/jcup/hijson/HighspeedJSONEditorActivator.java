@@ -49,7 +49,7 @@ public class HighspeedJSONEditorActivator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		
-		HighspeedJSONEditorUtil.refreshAllowCommentsState();
+		HighspeedJSONEditorUtil.refreshParserSettings();
 		
 	}
 

@@ -131,7 +131,11 @@ public class HighspeedJSONEditorPreferences {
 	public boolean isAllowingComments() {
 	    return getBooleanPreference(P_EDITOR_ALLOW_COMMENTS_ENABLED);
 	}
-	
+
+	public boolean isAllowingUnquotedControlChars() {
+	    return getBooleanPreference(P_EDITOR_ALLOW_UNQUOTED_CONTROL_CHARS);
+	}
+
 	public IPreferenceStore getPreferenceStore() {
 		return store;
 	}

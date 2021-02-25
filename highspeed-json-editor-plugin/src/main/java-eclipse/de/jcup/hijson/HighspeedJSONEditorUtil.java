@@ -124,7 +124,7 @@ public class HighspeedJSONEditorUtil {
             logError("Was not able to add error markers", e);
         }
     }
-    
+
     public static void addErrorMarker(int line, String message, IEditorInput input, int start, int end) {
         if (input == null) {
             return;
@@ -148,8 +148,9 @@ public class HighspeedJSONEditorUtil {
         return log;
     }
 
-    public static void refreshAllowCommentsState() {
+    public static void refreshParserSettings() {
         JSONFormatSupport.DEFAULT.setAllowComents(HighspeedJSONEditorPreferences.getInstance().isAllowingComments());
+        JSONFormatSupport.DEFAULT.setAllowUnquotedControlChars(HighspeedJSONEditorPreferences.getInstance().isAllowingUnquotedControlChars());
     }
 
 }
