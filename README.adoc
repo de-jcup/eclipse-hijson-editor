@@ -1,4 +1,4 @@
-[![Java CI with Gradle](https://github.com/de-jcup/eclipse-hijson-editor/actions/workflows/gradle.yml/badge.svg)](https://github.com/de-jcup/eclipse-hijson-editor/actions/workflows/gradle.yml)
+image:https://github.com/de-jcup/eclipse-hijson-editor/actions/workflows/gradle.yml/badge.svg[Java CI with Gradle,link=https://github.com/de-jcup/eclipse-hijson-editor/actions/workflows/gradle.yml]
 
 == About
 
