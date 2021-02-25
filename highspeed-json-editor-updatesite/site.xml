@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/de.jcup.hijson_0.1.0.jar" id="de.jcup.hijson" version="0.1.0"/>
+   <feature url="features/de.jcup.hijson_1.0.0.jar" id="de.jcup.hijson" version="1.0.0">
+      <category name="de.jcup.hijsoneditor.category"/>
+   </feature>
+   <category-def name="de.jcup.hijsoneditor.category" label="Stable"/>
 </site>
