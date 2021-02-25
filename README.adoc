@@ -6,9 +6,6 @@ image:https://github.com/de-jcup/eclipse-hijson-editor/actions/workflows/gradle.
 
 The project page can be found at https://github.com/de-jcup/eclipse-hijson-editor
 
-WARNING: Current status: Alpha
-
-
 == Why is this editor faster than other eclipse plugins for JSON editor?
 
 - One liners having more than x (x=currently 1000 characters but not at least 
