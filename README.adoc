@@ -1,3 +1,5 @@
+[![Java CI with Gradle](https://github.com/de-jcup/eclipse-hijson-editor/actions/workflows/gradle.yml/badge.svg)](https://github.com/de-jcup/eclipse-hijson-editor/actions/workflows/gradle.yml)
+
 == About
 
 *HiJSON Editor* _(highspeed JSON eclipse editor plugin)_ is a specialized eclipse plugin to handle bigger JSON files in a very performant /fast way.
