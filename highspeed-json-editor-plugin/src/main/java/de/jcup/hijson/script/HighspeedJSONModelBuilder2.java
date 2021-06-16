@@ -112,6 +112,10 @@ public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
         }
         List<Item> children = originParent.getChildren();
         String originName = originParent.getName();
+        if (originName==null) {
+            // we set to empty in this case - looks better
+            originName="";
+        }
         originParent.setName(originName + " (" + children.size() + ")");
 
         return originName;

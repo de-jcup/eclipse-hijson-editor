@@ -21,7 +21,6 @@ import de.jcup.hijson.script.HighspeedJSONModel;
 
 public class HighspeedJSONEditorTreeContentProvider2 implements ITreeContentProvider {
 
-    private static final String JSON_MODEL_CONTAINS_ERRORS = "JSON contains errors.";
     private static final String JSON_MODEL_EMPTY_OR_INVALID = "Empty JSON or invalid";
     private static final String JSON_MODEL_DISABLED = "Outline disabled - must be enabled by menu or toolbar";
     private static final Object[] RESULT_WHEN_EMPTY = new Object[] { JSON_MODEL_EMPTY_OR_INVALID };
@@ -79,7 +78,20 @@ public class HighspeedJSONEditorTreeContentProvider2 implements ITreeContentProv
     public void rebuildTree(HighspeedJSONModel model) {
         synchronized (monitor) {
             this.model = model;
-            items = new Item[] { model.getRootItem() };
+            Item rootItem = model != null ? model.getRootItem() : null;
+            Item item = null;
+            
+            if (outlineEnabled && rootItem != null) {
+                item = rootItem;
+            } else {
+                item = new Item();
+                if (!outlineEnabled) {
+                    item.name = JSON_MODEL_DISABLED;
+                } else {
+                    item.name = JSON_MODEL_EMPTY_OR_INVALID;
+                }
+            }
+            items = new Item[] { item };
         }
     }
 
@@ -89,7 +101,7 @@ public class HighspeedJSONEditorTreeContentProvider2 implements ITreeContentProv
                 return null;
             }
             Item item = null;
-            for (int i = 0; i < 20 && item == null; i++) {
+            for (int i = 0; i < 50 && item == null; i++) {
                 int offset2 = offset + i;
                 item = model.getItemOffsetMap().get(offset2);
 
