@@ -28,6 +28,9 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -54,6 +57,7 @@ import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.ide.ResourceUtil;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.IDocumentProviderExtension;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
@@ -84,9 +88,9 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
     public static final String EDITOR_CONTEXT_MENU_ID = EDITOR_ID + ".context";
     /** The COMMAND_ID of the editor ruler context menu */
     public static final String EDITOR_RULER_CONTEXT_MENU_ID = EDITOR_CONTEXT_MENU_ID + ".ruler";
-    
+
     private static final HighspeedJSONModel FALLBACK_EMPTY_MODEL = new HighspeedJSONModel();
-    
+
     private HighspeedJSONBracketsSupport bracketMatcher = new HighspeedJSONBracketsSupport();
     private SourceViewerDecorationSupport additionalSourceViewerSupport;
     private HighspeedJSONEditorContentOutlinePage outlinePage;
@@ -109,7 +113,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
 
     public void formatJSON() {
         FormatterResult result = JSONFormatSupport.DEFAULT.formatJSON(getDocumentText());
-        if (! result.state.hasContentChanged()) {
+        if (!result.state.hasContentChanged()) {
             return;
         }
         getDocument().set(result.getFormatted());
@@ -119,8 +123,8 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
         try {
             JSONFormatSupport.DEFAULT.validateJSON(getDocumentText());
         } catch (JsonProcessingException e) {
-           JsonLocation location = e.getLocation();
-           HighspeedJSONEditorUtil.addErrorMarker(location.getLineNr(), e.getMessage(), getEditorInput(), (int)location.getCharOffset(), (int)location.getCharOffset());
+            JsonLocation location = e.getLocation();
+            HighspeedJSONEditorUtil.addErrorMarker(location.getLineNr(), e.getMessage(), getEditorInput(), (int) location.getCharOffset(), (int) location.getCharOffset());
         }
     }
 
@@ -155,7 +159,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
     }
 
     void setTitleImageDependingOnSeverity(int severity) {
-        EclipseUtil.safeAsyncExec(()->{
+        EclipseUtil.safeAsyncExec(() -> {
             if (severity == IMarker.SEVERITY_ERROR) {
                 setTitleImage(EclipseUtil.getImage("icons/highspeed-json-editor-with-error.png", HighspeedJSONEditorActivator.PLUGIN_ID));
             } else {
@@ -393,38 +397,48 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
     public void rebuildOutlineAndOrValidate() {
         String text = getDocumentText();
 
-        EclipseUtil.safeAsyncExec(new Runnable() {
+        Runnable r = new Runnable() {
 
             @Override
             public void run() {
                 HighspeedJSONEditorUtil.removeScriptErrors(HighspeedJSONEditor.this);
-                
+
                 HighspeedJSONEditorContentOutlinePage page = getOutlinePage();
-                
+
                 boolean outlineBuildEnabled = page.isOutlineBuildEnabled();
                 boolean validateOnSaveEnabled = HighspeedJSONEditorPreferences.getInstance().isValidateOnSaveEnabled();
 
                 HighspeedJSONModel model = null;
-                
+
                 if (outlineBuildEnabled || validateOnSaveEnabled) {
                     model = modelBuilder.build(text);
                     validateJSON();
                 }
-                
-                if (model==null) {
+
+                if (model == null) {
                     model = FALLBACK_EMPTY_MODEL;
                 }
-                
+
                 if (outlineBuildEnabled) {
                     page.rebuild(model);
-                }else {
+                } else {
                     page.rebuild(FALLBACK_EMPTY_MODEL); // reset tree
                 }
                 if (validateOnSaveEnabled && model.hasErrors()) {
                     addErrorMarkers(model);
                 }
             }
-        });
+        };
+
+        UIJob job = new UIJob("Build HiJSON outline") {
+
+            @Override
+            public IStatus runInUIThread(IProgressMonitor monitor) {
+                r.run();
+                return Status.OK_STATUS;
+            }
+        };
+        job.schedule(300);
     }
 
     /**

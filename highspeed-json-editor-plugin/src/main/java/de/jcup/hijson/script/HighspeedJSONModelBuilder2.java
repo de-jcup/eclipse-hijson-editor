@@ -96,12 +96,12 @@ public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
 
                 }
             }
+            model.setRootItem(context.rootItem);
         } catch (IOException e) {
             HighspeedJSONError error = new HighspeedJSONError();
             error.message = e.getMessage();
             model.getErrors().add(error);
         }
-        model.setRootItem(context.rootItem);
         return model;
     }
 
@@ -112,9 +112,9 @@ public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
         }
         List<Item> children = originParent.getChildren();
         String originName = originParent.getName();
-        if (originName==null) {
+        if (originName == null) {
             // we set to empty in this case - looks better
-            originName="";
+            originName = "";
         }
         originParent.setName(originName + " (" + children.size() + ")");
 
@@ -166,7 +166,7 @@ public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
                 parent = new Item();
                 parent.setType(ItemType.VIRTUAL_ARRAY_SEGMENT_NODE);
                 parent.setItemVariant(ItemVariant.ARRAY_SEGMENT);
-                String parentName = "[" +index + "..";
+                String parentName = "[" + index + "..";
                 if (remaining < 100) {
                     parentName += index + remaining;
                 } else {

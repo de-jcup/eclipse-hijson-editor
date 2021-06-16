@@ -100,6 +100,9 @@ public class HighspeedJSONEditorTreeContentProvider2 implements ITreeContentProv
             if (model == null) {
                 return null;
             }
+            if (model.hasErrors()) {
+                return null;
+            }
             Item item = null;
             for (int i = 0; i < 50 && item == null; i++) {
                 int offset2 = offset + i;

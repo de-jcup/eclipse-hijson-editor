@@ -124,8 +124,6 @@ public class HighspeedJSONEditorContentOutlinePage extends ContentOutlinePage im
 			// selection itself is already handled by single click
 			return;
 		}
-		ISelection selection = event.getSelection();
-		editor.openSelectedTreeItemInEditor(selection, true);
 	}
 
 	@Override
