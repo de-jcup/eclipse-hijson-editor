@@ -118,7 +118,7 @@ public class HighspeedJSONEditorPreferences {
 	}
 
 	public boolean isLinkOutlineWithEditorEnabled() {
-		return getBooleanPreference(P_LINK_OUTLINE_WITH_EDITOR);
+		return getBooleanPreference(P_LINK_EDITOR_WITH_OUTLINE);
 	}
 	
 	public boolean isOutlineBuildEnabled() {

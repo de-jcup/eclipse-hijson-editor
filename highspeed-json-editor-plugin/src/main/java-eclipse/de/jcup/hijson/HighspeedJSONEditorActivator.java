@@ -18,9 +18,6 @@ package de.jcup.hijson;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.jcup.hijson.document.JSONFormatSupport;
-import de.jcup.hijson.preferences.HighspeedJSONEditorPreferences;
-
 /**
  * The activator class controls the plug-in life cycle
  */

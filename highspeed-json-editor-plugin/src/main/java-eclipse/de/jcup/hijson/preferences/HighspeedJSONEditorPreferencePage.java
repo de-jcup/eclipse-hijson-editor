@@ -130,7 +130,7 @@ public class HighspeedJSONEditorPreferencePage extends FieldEditorPreferencePage
 		otherComposite.setLayout(otherLayout);
 
 		/*  outline */
-		linkEditorWithOutline = new BooleanFieldEditor(P_LINK_OUTLINE_WITH_EDITOR.getId(),
+		linkEditorWithOutline = new BooleanFieldEditor(P_LINK_EDITOR_WITH_OUTLINE.getId(),
 				"New opened editors are linked with outline", otherComposite);
 		linkEditorWithOutline.getDescriptionControl(otherComposite)
 		.setToolTipText("Via this setting the default behaviour for new opened outlines is set");

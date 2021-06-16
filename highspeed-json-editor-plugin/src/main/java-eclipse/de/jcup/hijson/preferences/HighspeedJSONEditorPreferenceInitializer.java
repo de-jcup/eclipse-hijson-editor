@@ -37,8 +37,9 @@ public class HighspeedJSONEditorPreferenceInitializer extends AbstractPreference
 		IPreferenceStore store = preferences.getPreferenceStore();
 		
 		/* Outline */
-		store.setDefault(P_LINK_OUTLINE_WITH_EDITOR.getId(), false);
-		store.setDefault(P_CREATE_OUTLINE_FOR_NEW_EDITOR.getId(), false); // per default no outline created - increases speed, reduces memory consumption
+		store.setDefault(P_LINK_EDITOR_WITH_OUTLINE.getId(), true);
+		store.setDefault(P_CREATE_OUTLINE_FOR_NEW_EDITOR.getId(), true); 
+		
 		/* PARSING */
 		store.setDefault(P_EDITOR_ALLOW_COMMENTS_ENABLED.getId(), true);
 		store.setDefault(P_EDITOR_ALLOW_UNQUOTED_CONTROL_CHARS.getId(), false);

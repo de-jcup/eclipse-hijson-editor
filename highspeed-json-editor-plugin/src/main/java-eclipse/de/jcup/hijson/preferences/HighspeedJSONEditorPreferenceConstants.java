@@ -31,8 +31,9 @@ public enum HighspeedJSONEditorPreferenceConstants implements PreferenceIdentifi
 	P_EDITOR_MATCHING_BRACKETS_COLOR("matchingBracketsColor"),
 	P_EDITOR_AUTO_CREATE_END_BRACKETSY("autoCreateEndBrackets"),
 	
-	P_LINK_OUTLINE_WITH_EDITOR("linkOutlineWithEditor"),
-	P_CREATE_OUTLINE_FOR_NEW_EDITOR("createOutlineEnabled"),
+	P_LINK_EDITOR_WITH_OUTLINE("linkEditorWithOutline"),
+	P_CREATE_OUTLINE_FOR_NEW_EDITOR("createOutlineForEditor"),
+	
 	P_VALIDATE_ON_SAVE("validateOnSaveEnabled"),
 	
 	P_CODE_ASSIST_ADD_KEYWORDS("codeAssistAddsKeyWords"),
