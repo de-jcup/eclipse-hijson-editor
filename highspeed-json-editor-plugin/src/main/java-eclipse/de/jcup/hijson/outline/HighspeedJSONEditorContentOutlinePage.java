@@ -47,7 +47,7 @@ public class HighspeedJSONEditorContentOutlinePage extends ContentOutlinePage im
     private static ImageDescriptor IMG_DESC_OUTLINE_DISABLED = EclipseUtil.createImageDescriptor("/icons/outline/skip_outline.png", HighspeedJSONEditorActivator.PLUGIN_ID);
     /* @formatter:off */
 
-	private HighspeedJSONEditorTreeContentProvider contentProvider;
+	private HighspeedJSONEditorTreeContentProvider2 contentProvider;
 	private Object input;
 	private HighspeedJSONEditor editor;
 	private HighspeedJSONEditorOutlineLabelProvider labelProvider;
@@ -59,10 +59,10 @@ public class HighspeedJSONEditorContentOutlinePage extends ContentOutlinePage im
 
 	public HighspeedJSONEditorContentOutlinePage(HighspeedJSONEditor editor) {
 		this.editor = editor;
-		this.contentProvider = new HighspeedJSONEditorTreeContentProvider();
+		this.contentProvider = new HighspeedJSONEditorTreeContentProvider2();
 	}
 
-	public HighspeedJSONEditorTreeContentProvider getContentProvider() {
+	public HighspeedJSONEditorTreeContentProvider2 getContentProvider() {
 		return contentProvider;
 	}
 
@@ -146,8 +146,8 @@ public class HighspeedJSONEditorContentOutlinePage extends ContentOutlinePage im
 			return;
 		}
 		ignoreNextSelectionEvents = true;
-		if (contentProvider instanceof HighspeedJSONEditorTreeContentProvider) {
-			HighspeedJSONEditorTreeContentProvider gcp = (HighspeedJSONEditorTreeContentProvider) contentProvider;
+		if (contentProvider instanceof HighspeedJSONEditorTreeContentProvider2) {
+			HighspeedJSONEditorTreeContentProvider2 gcp = (HighspeedJSONEditorTreeContentProvider2) contentProvider;
 			Item item = gcp.tryToFindByOffset(caretOffset);
 			if (item != null) {
 				StructuredSelection selection = new StructuredSelection(item);

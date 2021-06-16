@@ -67,13 +67,14 @@ import de.jcup.hijson.document.HighspeedJSONTextFileDocumentProvider;
 import de.jcup.hijson.document.JSONFormatSupport;
 import de.jcup.hijson.document.JSONFormatSupport.FormatterResult;
 import de.jcup.hijson.outline.HighspeedJSONEditorContentOutlinePage;
-import de.jcup.hijson.outline.HighspeedJSONEditorTreeContentProvider;
+import de.jcup.hijson.outline.HighspeedJSONEditorTreeContentProvider2;
 import de.jcup.hijson.outline.HighspeedJSONQuickOutlineDialog;
 import de.jcup.hijson.outline.Item;
 import de.jcup.hijson.preferences.HighspeedJSONEditorPreferences;
+import de.jcup.hijson.script.HighSpeedJSONModelBuilder;
 import de.jcup.hijson.script.HighspeedJSONError;
 import de.jcup.hijson.script.HighspeedJSONModel;
-import de.jcup.hijson.script.HighspeedJSONModelBuilder;
+import de.jcup.hijson.script.HighspeedJSONModelBuilder2;
 
 public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupport, IResourceChangeListener {
 
@@ -89,13 +90,13 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
     private HighspeedJSONBracketsSupport bracketMatcher = new HighspeedJSONBracketsSupport();
     private SourceViewerDecorationSupport additionalSourceViewerSupport;
     private HighspeedJSONEditorContentOutlinePage outlinePage;
-    private HighspeedJSONModelBuilder modelBuilder;
+    private HighSpeedJSONModelBuilder modelBuilder;
     private Object monitor = new Object();
     private boolean quickOutlineOpened;
     private int lastCaretPosition;
 
     public HighspeedJSONEditor() {
-        this.modelBuilder = new HighspeedJSONModelBuilder();
+        this.modelBuilder = new HighspeedJSONModelBuilder2();
     }
 
     public void resourceChanged(IResourceChangeEvent event) {
@@ -342,7 +343,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
         if (StatusMessageSupport.class.equals(adapter)) {
             return (T) this;
         }
-        if (ITreeContentProvider.class.equals(adapter) || HighspeedJSONEditorTreeContentProvider.class.equals(adapter)) {
+        if (ITreeContentProvider.class.equals(adapter) || HighspeedJSONEditorTreeContentProvider2.class.equals(adapter)) {
             if (outlinePage == null) {
                 return null;
             }
@@ -407,6 +408,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
                 
                 if (outlineBuildEnabled || validateOnSaveEnabled) {
                     model = modelBuilder.build(text);
+                    validateJSON();
                 }
                 
                 if (model==null) {
@@ -635,7 +637,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
         if (outlinePage == null) {
             return null;
         }
-        HighspeedJSONEditorTreeContentProvider contentProvider = outlinePage.getContentProvider();
+        HighspeedJSONEditorTreeContentProvider2 contentProvider = outlinePage.getContentProvider();
         if (contentProvider == null) {
             return null;
         }

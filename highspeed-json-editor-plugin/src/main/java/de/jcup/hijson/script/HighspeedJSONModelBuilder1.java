@@ -6,12 +6,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import de.jcup.hijson.document.JSONFormatSupport;
 
-public class HighspeedJSONModelBuilder {
+@Deprecated // use HighspeedJSONModelBuilder2 instead
+public class HighspeedJSONModelBuilder1 implements HighSpeedJSONModelBuilder {
+    @Override
     public HighspeedJSONModel build(String text) {
         return build(text,false);
     }
     
-	public HighspeedJSONModel build(String text, boolean ignoreFailures) {
+	@Override
+    public HighspeedJSONModel build(String text, boolean ignoreFailures) {
 		HighspeedJSONModel model = new HighspeedJSONModel();
 		
 		

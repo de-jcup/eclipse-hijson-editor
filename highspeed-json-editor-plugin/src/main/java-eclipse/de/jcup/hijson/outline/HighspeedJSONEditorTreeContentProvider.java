@@ -31,6 +31,7 @@ import de.jcup.hijson.outline.ItemType;
 import de.jcup.hijson.script.HighspeedJSONError;
 import de.jcup.hijson.script.HighspeedJSONModel;
 
+@Deprecated // use HighspeedJSONEditorTreeContentProvider2
 public class HighspeedJSONEditorTreeContentProvider implements ITreeContentProvider {
 
     private static final String JSON_MODEL_CONTAINS_ERRORS = "JSON contains errors.";

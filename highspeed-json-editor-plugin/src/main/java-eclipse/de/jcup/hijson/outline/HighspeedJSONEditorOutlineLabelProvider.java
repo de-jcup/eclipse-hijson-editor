@@ -13,7 +13,7 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.outline;
+package de.jcup.hijson.outline;
 
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
@@ -28,103 +28,114 @@ import de.jcup.hijson.ColorManager;
 import de.jcup.hijson.EclipseUtil;
 import de.jcup.hijson.HighspeedJSONEditorActivator;
 import de.jcup.hijson.HighspeedJSONEditorColorConstants;
+import de.jcup.hijson.SimpleStringUtils;
 import de.jcup.hijson.outline.Item;
 import de.jcup.hijson.outline.ItemType;
 
 public class HighspeedJSONEditorOutlineLabelProvider extends BaseLabelProvider implements IStyledLabelProvider, IColorProvider {
 
-	private static final String ICON_JSONNODE = "public_co.png";
-	private static final String ICON_ERROR ="error_tsk.png";
-	private static final String ICON_INFO ="info_tsk.png";
+    private static final String ICON_JSONNODE = "public_co.png";
+    private static final String ICON_ERROR = "error_tsk.png";
+    private static final String ICON_INFO = "info_tsk.png";
 
-	private Styler outlineItemTypeStyler = new Styler() {
+    private Styler outlineItemTypeStyler = new Styler() {
 
-		@Override
-		public void applyStyles(TextStyle textStyle) {
-			textStyle.foreground = getColorManager().getColor(HighspeedJSONEditorColorConstants.OUTLINE_ITEM__TYPE);
-		}
-	};
+        @Override
+        public void applyStyles(TextStyle textStyle) {
+            textStyle.foreground = getColorManager().getColor(HighspeedJSONEditorColorConstants.OUTLINE_ITEM__TYPE);
+        }
+    };
 
-	@Override
-	public Color getBackground(Object element) {
-		return null;
-	}
+    @Override
+    public Color getBackground(Object element) {
+        return null;
+    }
 
-	@Override
-	public Color getForeground(Object element) {
-		return null;
-	}
+    @Override
+    public Color getForeground(Object element) {
+        return null;
+    }
 
-	@Override
-	public Image getImage(Object element) {
-		if (element == null){
-			return null;
-		}
-		if (element instanceof Item) {
-			Item item = (Item) element;
+    @Override
+    public Image getImage(Object element) {
+        if (element == null) {
+            return null;
+        }
+        if (element instanceof Item) {
+            Item item = (Item) element;
 
-			ItemType type = item.getItemType();
-			
-			
-			if (type == null) {
-				return null;
-			}
+            ItemType type = item.getItemType();
 
-			switch (type) {
-			case JSON_NODE:
-				return getOutlineImage(ICON_JSONNODE);
-			case META_ERROR:
-				return getOutlineImage(ICON_ERROR);
-			case META_INFO:
-				return getOutlineImage(ICON_INFO);
-			default:
-				return null;
-			}
-		}
-		return null;
-	}
+            if (type == null) {
+                return null;
+            }
 
-	@Override
-	public StyledString getStyledText(Object element) {
-		StyledString styled = new StyledString();
-		if (element == null) {
-			styled.append("null");
-		}
-		if (element instanceof Item) {
-			Item item = (Item) element;
+            ItemVariant itemVariant = item.getItemVariant();
+            switch (type) {
+            case JSON_NODE:
+                if (itemVariant == ItemVariant.VALUE) {
+                    return getOutlineImage("field_protected_obj.png");
+                }
+                if (itemVariant == ItemVariant.ARRAY) {
+                    return getOutlineImage("array.png");
+                }
+                if (itemVariant == ItemVariant.OBJECT) {
+                    return getOutlineImage("object.png");
+                }
+                return getOutlineImage(ICON_JSONNODE);
+            case META_ERROR:
+                return getOutlineImage(ICON_ERROR);
+            case META_INFO:
+                return getOutlineImage(ICON_INFO);
+            default:
+                return null;
+            }
+        }
+        return null;
+    }
 
-			ItemType itemType = item.getItemType();
-			if (itemType==ItemType.JSON_NODE){
-				
-				StyledString typeString = new StyledString(item.variant+" ", outlineItemTypeStyler);
-				styled.append(typeString);
-			}else if (itemType==ItemType.META_DEBUG){
-				StyledString typeString = new StyledString(item.getOffset()+": ", outlineItemTypeStyler);
-				styled.append(typeString);
-			}
-			String name = item.getName();
-			if (name != null) {
-				styled.append(name );//+" { ... }");
-			}
+    @Override
+    public StyledString getStyledText(Object element) {
+        StyledString styled = new StyledString();
+        if (element == null) {
+            styled.append("null");
+        }
+        if (element instanceof Item) {
+            Item item = (Item) element;
 
-		} else {
-			return styled.append(element.toString());
-		}
+            String name = item.getName();
+            if (name != null) {
+                styled.append(name);// +" { ... }");
+                styled.append(" ");
+            }
+            ItemType itemType = item.getItemType();
+            if (itemType == ItemType.JSON_NODE) {
+                if (item.itemVariant == ItemVariant.VALUE) {
+                    StyledString typeString = new StyledString(SimpleStringUtils.shortString(item.getContent(), 20) + " ", outlineItemTypeStyler);
+                    styled.append(typeString);
+                }
+            } else if (itemType == ItemType.META_DEBUG) {
+                StyledString typeString = new StyledString(item.getOffset() + ": ", outlineItemTypeStyler);
+                styled.append(typeString);
+            }
 
-		return styled;
-	}
+        } else {
+            return styled.append(element.toString());
+        }
 
+        return styled;
+    }
 
-	public ColorManager getColorManager() {
-		HighspeedJSONEditorActivator editorActivator = HighspeedJSONEditorActivator.getDefault();
-		if (editorActivator == null) {
-			return ColorManager.getStandalone();
-		}
-		return editorActivator.getColorManager();
-	}
+    public ColorManager getColorManager() {
+        HighspeedJSONEditorActivator editorActivator = HighspeedJSONEditorActivator.getDefault();
+        if (editorActivator == null) {
+            return ColorManager.getStandalone();
+        }
+        return editorActivator.getColorManager();
+    }
 
-	private Image getOutlineImage(String name) {
-		return EclipseUtil.getImage("/icons/outline/" + name, HighspeedJSONEditorActivator.PLUGIN_ID);
-	}
+    private Image getOutlineImage(String name) {
+        return EclipseUtil.getImage("/icons/outline/" + name, HighspeedJSONEditorActivator.PLUGIN_ID);
+    }
 
 }

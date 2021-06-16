@@ -15,12 +15,32 @@
  */
  package de.jcup.hijson.outline;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Item {
 
-	ItemType type;
+    ItemVariant itemVariant;
+	public ItemVariant getItemVariant() {
+        return itemVariant;
+    }
+
+    public void setItemVariant(ItemVariant itemVariant) {
+        this.itemVariant = itemVariant;
+        
+        this.variant=itemVariant!=null ? itemVariant.getText(): null;
+    }
+
+    public ItemType getType() {
+        return type;
+    }
+
+    public Item getParent() {
+        return parent;
+    }
+
+    ItemType type;
 	String name;
 	String variant;
 	int offset;
@@ -28,6 +48,7 @@ public class Item {
 	int endOffset;
 	Item parent;
     List<Item> children =Collections.emptyList(); // initial only empty list
+    private String content;
 	
 	/**
 	 * @return item type , or <code>null</code>
@@ -56,7 +77,64 @@ public class Item {
         return variant;
     }
 	
-	@Override
+	
+	
+	public void setType(ItemType type) {
+        this.type = type;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setVariant(String variant) {
+        this.variant = variant;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public void setEndOffset(int endOffset) {
+        this.endOffset = endOffset;
+    }
+
+    public void setParent(Item parent) {
+        this.parent = parent;
+    }
+
+    public void setChildren(List<Item> children) {
+        this.children = children;
+    }
+    
+    public List<Item> getChildren() {
+        return children;
+    }
+    
+    /**
+     * Adds given item as a child and marks this as parent of child
+     * @param item
+     */
+    public void addChild(Item item) {
+        if (! (children instanceof ArrayList)) {
+            children = new ArrayList<Item>();
+        }
+        item.setParent(this);
+        children.add(item);
+    }
+    public void setContent(String content) {
+        this.content=content;
+    }
+    
+    public String getContent() {
+        return content;
+    }
+
+    @Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Item:");
@@ -78,4 +156,5 @@ public class Item {
 	public String buildSearchString() {
 		return name;
 	}
+
 }

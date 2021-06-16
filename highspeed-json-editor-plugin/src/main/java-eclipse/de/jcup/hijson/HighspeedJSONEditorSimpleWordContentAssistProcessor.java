@@ -21,9 +21,6 @@ import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
-import de.jcup.hijson.SimpleWordCodeCompletion;
-import de.jcup.hijson.SimpleWordListBuilder;
-import de.jcup.hijson.WordListBuilder;
 import de.jcup.hijson.document.keywords.DocumentKeyWord;
 import de.jcup.hijson.preferences.HighspeedJSONEditorPreferences;
 
