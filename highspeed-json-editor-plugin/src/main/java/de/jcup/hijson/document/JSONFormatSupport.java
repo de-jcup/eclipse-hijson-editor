@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JSONFormatSupport {
 
+    private static final int MAXIMUM_POSITIONS_TO_SCAN = 2000;
+
     public class FormatterResult {
         private String origin;
         private String formatted;
@@ -92,7 +94,10 @@ public class JSONFormatSupport {
         }
         int count = 0;
         int pos = 0;
-        while (count < minNewLines && pos < 2000) {
+        while (count < minNewLines && pos < MAXIMUM_POSITIONS_TO_SCAN) {
+            if (str.length() <= pos) {
+                break;
+            }
             char c = str.charAt(pos);
             if (c == '\n') {
                 count++;
