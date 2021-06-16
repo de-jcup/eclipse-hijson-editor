@@ -34,6 +34,9 @@ import de.jcup.hijson.outline.ItemType;
 
 public class HighspeedJSONEditorOutlineLabelProvider extends BaseLabelProvider implements IStyledLabelProvider, IColorProvider {
 
+    private static final String JSON_OBJECT = "object.png";
+    private static final String ICON_JSON_ARRAY = "array.png";
+    private static final String ICON_JSON_VALUE = "field_protected_obj.png";
     private static final String ICON_JSONNODE = "public_co.png";
     private static final String ICON_ERROR = "error_tsk.png";
     private static final String ICON_INFO = "info_tsk.png";
@@ -74,13 +77,13 @@ public class HighspeedJSONEditorOutlineLabelProvider extends BaseLabelProvider i
             switch (type) {
             case JSON_NODE:
                 if (itemVariant == ItemVariant.VALUE) {
-                    return getOutlineImage("field_protected_obj.png");
+                    return getOutlineImage(ICON_JSON_VALUE);
                 }
                 if (itemVariant == ItemVariant.ARRAY) {
-                    return getOutlineImage("array.png");
+                    return getOutlineImage(ICON_JSON_ARRAY);
                 }
                 if (itemVariant == ItemVariant.OBJECT) {
-                    return getOutlineImage("object.png");
+                    return getOutlineImage(JSON_OBJECT);
                 }
                 return getOutlineImage(ICON_JSONNODE);
             case META_ERROR:

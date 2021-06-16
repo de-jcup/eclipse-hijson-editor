@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import de.jcup.hijson.outline.Item;
 import de.jcup.hijson.outline.ItemType;
 import de.jcup.hijson.outline.ItemVariant;
+import de.jcup.hijson.preferences.HighspeedJSONEditorPreferences;
 
 public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
 
@@ -183,7 +184,7 @@ public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
     }
 
     private int getAmountChildrenToStartGrouping() {
-        return 10;
+        return HighspeedJSONEditorPreferences.getInstance().getGroupdArraysTreshold();
     }
 
     private Item addJsonNodeToParent(ItemVariant variant, JSONContext context) {

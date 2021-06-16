@@ -35,12 +35,12 @@ import de.jcup.hijson.HighspeedJSONEditorActivator;
 
 public class HighspeedJSONEditorPreferences {
 
-	private static HighspeedJSONEditorPreferences INSTANCE = new HighspeedJSONEditorPreferences();
-	private IPreferenceStore store;
+    private static HighspeedJSONEditorPreferences INSTANCE = new HighspeedJSONEditorPreferences();
+    private IPreferenceStore store;
 
-	private HighspeedJSONEditorPreferences() {
-		store = new ScopedPreferenceStore(InstanceScope.INSTANCE, HighspeedJSONEditorActivator.PLUGIN_ID);
-		store.addPropertyChangeListener(new IPropertyChangeListener() {
+    private HighspeedJSONEditorPreferences() {
+        store = new ScopedPreferenceStore(InstanceScope.INSTANCE, HighspeedJSONEditorActivator.PLUGIN_ID);
+        store.addPropertyChangeListener(new IPropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent event) {
@@ -81,15 +81,15 @@ public class HighspeedJSONEditorPreferences {
                         continue;
                     }
                     HighspeedJSONEditor geditor = (HighspeedJSONEditor) editor;
-                    if (context.colorChanged){
+                    if (context.colorChanged) {
                         geditor.handleColorSettingsChanged();
                     }
                 }
             }
         });
-	}
-	
-	private class ChangeContext {
+    }
+
+    private class ChangeContext {
         private boolean colorChanged = false;
         private boolean validationChanged = false;
 
@@ -100,79 +100,82 @@ public class HighspeedJSONEditorPreferences {
         }
     }
 
-	public String getStringPreference(HighspeedJSONEditorPreferenceConstants id) {
-		String data = getPreferenceStore().getString(id.getId());
-		if (data == null) {
-			data = "";
-		}
-		return data;
-	}
+    public String getStringPreference(HighspeedJSONEditorPreferenceConstants id) {
+        String data = getPreferenceStore().getString(id.getId());
+        if (data == null) {
+            data = "";
+        }
+        return data;
+    }
 
-	public boolean getBooleanPreference(HighspeedJSONEditorPreferenceConstants id) {
-		boolean data = getPreferenceStore().getBoolean(id.getId());
-		return data;
-	}
+    public boolean getBooleanPreference(HighspeedJSONEditorPreferenceConstants id) {
+        boolean data = getPreferenceStore().getBoolean(id.getId());
+        return data;
+    }
 
-	public void setBooleanPreference(HighspeedJSONEditorPreferenceConstants id, boolean value) {
-		getPreferenceStore().setValue(id.getId(), value);
-	}
+    public void setBooleanPreference(HighspeedJSONEditorPreferenceConstants id, boolean value) {
+        getPreferenceStore().setValue(id.getId(), value);
+    }
 
-	public boolean isLinkOutlineWithEditorEnabled() {
-		return getBooleanPreference(P_LINK_EDITOR_WITH_OUTLINE);
-	}
-	
-	public boolean isOutlineBuildEnabled() {
+    public boolean isLinkOutlineWithEditorEnabled() {
+        return getBooleanPreference(P_LINK_EDITOR_WITH_OUTLINE);
+    }
+
+    public boolean isOutlineBuildEnabled() {
         return getBooleanPreference(P_CREATE_OUTLINE_FOR_NEW_EDITOR);
     }
-	public boolean isValidateOnSaveEnabled() {
-	    return getBooleanPreference(P_VALIDATE_ON_SAVE);
-	}
-	
-	public boolean isAllowingComments() {
-	    return getBooleanPreference(P_EDITOR_ALLOW_COMMENTS_ENABLED);
-	}
 
-	public boolean isAllowingUnquotedControlChars() {
-	    return getBooleanPreference(P_EDITOR_ALLOW_UNQUOTED_CONTROL_CHARS);
-	}
+    public boolean isValidateOnSaveEnabled() {
+        return getBooleanPreference(P_VALIDATE_ON_SAVE);
+    }
 
-	public IPreferenceStore getPreferenceStore() {
-		return store;
-	}
+    public boolean isAllowingComments() {
+        return getBooleanPreference(P_EDITOR_ALLOW_COMMENTS_ENABLED);
+    }
 
-	public boolean getDefaultBooleanPreference(HighspeedJSONEditorPreferenceConstants id) {
-		boolean data = getPreferenceStore().getDefaultBoolean(id.getId());
-		return data;
-	}
+    public boolean isAllowingUnquotedControlChars() {
+        return getBooleanPreference(P_EDITOR_ALLOW_UNQUOTED_CONTROL_CHARS);
+    }
 
-	public RGB getColor(PreferenceIdentifiable identifiable) {
-		RGB color = PreferenceConverter.getColor(getPreferenceStore(), identifiable.getId());
-		return color;
-	}
+    public IPreferenceStore getPreferenceStore() {
+        return store;
+    }
 
-	/**
-	 * Returns color as a web color in format "#RRGGBB"
-	 * 
-	 * @param identifiable
-	 * @return web color string
-	 */
-	public String getWebColor(PreferenceIdentifiable identifiable) {
-		RGB color = getColor(identifiable);
-		if (color == null) {
-			return null;
-		}
-		String webColor = ColorUtil.convertToHexColor(color);
-		return webColor;
-	}
+    public boolean getDefaultBooleanPreference(HighspeedJSONEditorPreferenceConstants id) {
+        boolean data = getPreferenceStore().getDefaultBoolean(id.getId());
+        return data;
+    }
 
-	public void setDefaultColor(PreferenceIdentifiable identifiable, RGB color) {
-		PreferenceConverter.setDefault(getPreferenceStore(), identifiable.getId(), color);
-	}
+    public RGB getColor(PreferenceIdentifiable identifiable) {
+        RGB color = PreferenceConverter.getColor(getPreferenceStore(), identifiable.getId());
+        return color;
+    }
 
-	public static HighspeedJSONEditorPreferences getInstance() {
-		return INSTANCE;
-	}
+    /**
+     * Returns color as a web color in format "#RRGGBB"
+     * 
+     * @param identifiable
+     * @return web color string
+     */
+    public String getWebColor(PreferenceIdentifiable identifiable) {
+        RGB color = getColor(identifiable);
+        if (color == null) {
+            return null;
+        }
+        String webColor = ColorUtil.convertToHexColor(color);
+        return webColor;
+    }
 
-	
+    public void setDefaultColor(PreferenceIdentifiable identifiable, RGB color) {
+        PreferenceConverter.setDefault(getPreferenceStore(), identifiable.getId(), color);
+    }
+
+    public static HighspeedJSONEditorPreferences getInstance() {
+        return INSTANCE;
+    }
+
+    public int getGroupdArraysTreshold() {
+        return getPreferenceStore().getInt(P_CREATE_GROUPED_ARRAYS_TRESHOLD.getId());
+    }
 
 }

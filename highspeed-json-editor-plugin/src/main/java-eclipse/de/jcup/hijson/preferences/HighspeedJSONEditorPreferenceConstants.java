@@ -33,6 +33,7 @@ public enum HighspeedJSONEditorPreferenceConstants implements PreferenceIdentifi
 	
 	P_LINK_EDITOR_WITH_OUTLINE("linkEditorWithOutline"),
 	P_CREATE_OUTLINE_FOR_NEW_EDITOR("createOutlineForEditor"),
+	P_CREATE_GROUPED_ARRAYS_TRESHOLD("createGroupedArraysTreshold"),
 	
 	P_VALIDATE_ON_SAVE("validateOnSaveEnabled"),
 	

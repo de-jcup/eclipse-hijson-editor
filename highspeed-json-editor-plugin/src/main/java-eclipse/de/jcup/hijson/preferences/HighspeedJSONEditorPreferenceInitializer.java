@@ -39,6 +39,7 @@ public class HighspeedJSONEditorPreferenceInitializer extends AbstractPreference
 		/* Outline */
 		store.setDefault(P_LINK_EDITOR_WITH_OUTLINE.getId(), true);
 		store.setDefault(P_CREATE_OUTLINE_FOR_NEW_EDITOR.getId(), true); 
+		store.setDefault(P_CREATE_GROUPED_ARRAYS_TRESHOLD.getId(), 100); 
 		
 		/* PARSING */
 		store.setDefault(P_EDITOR_ALLOW_COMMENTS_ENABLED.getId(), true);
