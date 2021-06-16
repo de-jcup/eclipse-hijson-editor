@@ -3,5 +3,8 @@
    <feature url="features/de.jcup.hijson_1.0.0.jar" id="de.jcup.hijson" version="1.0.0">
       <category name="de.jcup.hijsoneditor.category"/>
    </feature>
+   <feature url="features/de.jcup.hijson_1.1.0.jar" id="de.jcup.hijson" version="1.1.0">
+      <category name="de.jcup.hijsoneditor.category"/>
+   </feature>
    <category-def name="de.jcup.hijsoneditor.category" label="Stable"/>
 </site>
