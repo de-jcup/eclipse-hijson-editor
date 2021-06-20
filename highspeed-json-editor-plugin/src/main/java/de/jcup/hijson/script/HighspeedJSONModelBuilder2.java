@@ -28,14 +28,13 @@ import com.fasterxml.jackson.core.JsonToken;
 import de.jcup.hijson.outline.Item;
 import de.jcup.hijson.outline.ItemType;
 import de.jcup.hijson.outline.ItemVariant;
-import de.jcup.hijson.preferences.HighspeedJSONEditorPreferences;
 
 public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
 
     private JsonFactory factory = new JsonFactory();
 
-    public HighspeedJSONModel build(String text) {
-        return build(text, false);
+    public HighspeedJSONModel build(String text, int tresholdGroupArrays) {
+        return build(text, tresholdGroupArrays, false);
     }
 
     private class JSONContext {
@@ -43,13 +42,15 @@ public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
         JsonParser parser;
         String currentName;
         Item currentParent;
+        int tresholdGroupArrays;
         public Item rootItem;
     }
 
-    public HighspeedJSONModel build(String json, boolean ignoreFailures) {
+    public HighspeedJSONModel build(String json, int tresholdGroupArrays, boolean ignoreFailures) {
         HighspeedJSONModel model = new HighspeedJSONModel();
         JSONContext context = new JSONContext();
         context.model = model;
+        context.tresholdGroupArrays = tresholdGroupArrays;
         try {
             context.parser = factory.createParser(json);
 
@@ -160,7 +161,7 @@ public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
         List<Item> children = originParent.getChildren();
 
         int amountOfChildren = children.size();
-        int groupAmount = getAmountChildrenToStartGrouping();
+        int groupAmount = context.tresholdGroupArrays;
         if (amountOfChildren <= groupAmount) {
             /* no grouping necessary */
             return;
@@ -200,10 +201,6 @@ public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
         }
 
         children.clear();
-    }
-
-    private int getAmountChildrenToStartGrouping() {
-        return HighspeedJSONEditorPreferences.getInstance().getGroupdArraysTreshold();
     }
 
     private Item addJsonNodeToParent(ItemVariant variant, JSONContext context) {

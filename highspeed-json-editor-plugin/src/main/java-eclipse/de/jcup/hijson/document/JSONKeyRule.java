@@ -91,7 +91,7 @@ public class JSONKeyRule implements IPredicateRule {
         }
         if (foundColon) {
             return token;
-        }else {
+        } else {
             support.resetToStartPos();
             return Token.UNDEFINED;
         }

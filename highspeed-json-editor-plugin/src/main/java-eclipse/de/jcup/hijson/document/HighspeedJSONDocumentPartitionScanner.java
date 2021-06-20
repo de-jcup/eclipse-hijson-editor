@@ -30,33 +30,32 @@ import org.eclipse.jface.text.rules.WordPatternRule;
 
 public class HighspeedJSONDocumentPartitionScanner extends RuleBasedPartitionScanner {
 
-    private final OnlyLettersKeyWordDetector onlyLettersKeyWordDetector = new OnlyLettersKeyWordDetector(); 
-    
-	public int getOffset(){
-		return fOffset;
-	}
-	
-	public HighspeedJSONDocumentPartitionScanner() {
-		IToken comment = createToken(COMMENT);
-		IToken doubleString = createToken(STRING);
-		IToken nullValue = createToken(NULL);
-		IToken key= createToken(KEY);
-		IToken bool= createToken(BOOLEAN);
+    private final OnlyLettersKeyWordDetector onlyLettersKeyWordDetector = new OnlyLettersKeyWordDetector();
 
-		List<IPredicateRule> rules = new ArrayList<>();
-		rules.add(new JSONKeyRule(key));
-		rules.add(new SingleLineRule("\"", "\"", doubleString, '\\' , true));
-		rules.add(new SingleLineRule("//", "", comment, (char) -1, true));
-		rules.add(new MultiLineRule("/*", "*/", comment, (char)-1, true));
-		rules.add(new WordPatternRule(onlyLettersKeyWordDetector,"false", "", bool));
-		rules.add(new WordPatternRule(onlyLettersKeyWordDetector,"true", "", bool));
-		rules.add(new WordPatternRule(onlyLettersKeyWordDetector,"null", "", nullValue));
+    public int getOffset() {
+        return fOffset;
+    }
 
-		setPredicateRules(rules.toArray(new IPredicateRule[rules.size()]));
-	}
+    public HighspeedJSONDocumentPartitionScanner() {
+        IToken comment = createToken(COMMENT);
+        IToken doubleString = createToken(STRING);
+        IToken nullValue = createToken(NULL);
+        IToken key = createToken(KEY);
+        IToken bool = createToken(BOOLEAN);
 
+        List<IPredicateRule> rules = new ArrayList<>();
+        rules.add(new JSONKeyRule(key));
+        rules.add(new SingleLineRule("\"", "\"", doubleString, '\\', true));
+        rules.add(new SingleLineRule("//", "", comment, (char) -1, true));
+        rules.add(new MultiLineRule("/*", "*/", comment, (char) -1, true));
+        rules.add(new WordPatternRule(onlyLettersKeyWordDetector, "false", "", bool));
+        rules.add(new WordPatternRule(onlyLettersKeyWordDetector, "true", "", bool));
+        rules.add(new WordPatternRule(onlyLettersKeyWordDetector, "null", "", nullValue));
 
-	private IToken createToken(HighspeedJSONDocumentIdentifier identifier) {
-		return new Token(identifier.getId());
-	}
+        setPredicateRules(rules.toArray(new IPredicateRule[rules.size()]));
+    }
+
+    private IToken createToken(HighspeedJSONDocumentIdentifier identifier) {
+        return new Token(identifier.getId());
+    }
 }

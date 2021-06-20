@@ -17,28 +17,28 @@ package de.jcup.hijson.script;
 
 public class HighspeedJSONNode {
 
-	private String name;
-	int pos;
-	int end;
+    private String name;
+    int pos;
+    int end;
 
-	public HighspeedJSONNode(String name){
-		this.name=name;
-	}
-	
-	public String getName() {
-		return name;
-	}
+    public HighspeedJSONNode(String name) {
+        this.name = name;
+    }
 
-	public int getPosition() {
-		return pos;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getLengthToNameEnd() {
-		return name.length();
-	}
+    public int getPosition() {
+        return pos;
+    }
 
-	public int getEnd() {
-		return end;
-	}
+    public int getLengthToNameEnd() {
+        return name.length();
+    }
+
+    public int getEnd() {
+        return end;
+    }
 
 }

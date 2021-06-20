@@ -13,12 +13,12 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.document.keywords;
+package de.jcup.hijson.document.keywords;
 
-public interface DocumentKeyWord{
+public interface DocumentKeyWord {
 
-	String getText();
+    String getText();
 
-	boolean isBreakingOnEof();
+    boolean isBreakingOnEof();
 
 }

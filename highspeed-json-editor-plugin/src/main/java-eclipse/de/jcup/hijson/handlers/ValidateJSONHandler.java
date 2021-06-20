@@ -13,16 +13,15 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.handlers;
+package de.jcup.hijson.handlers;
 
 import de.jcup.hijson.HighspeedJSONEditor;
 
-public class ValidateJSONHandler extends AbstractHighspeedJSONEditorHandler{
+public class ValidateJSONHandler extends AbstractHighspeedJSONEditorHandler {
 
-	@Override
-	protected void executeOnHighspeedJSONEditor(HighspeedJSONEditor jsonEditor) {
-		jsonEditor.validateJSON();
-	}
-
+    @Override
+    protected void executeOnHighspeedJSONEditor(HighspeedJSONEditor jsonEditor) {
+        jsonEditor.validateJSON();
+    }
 
 }

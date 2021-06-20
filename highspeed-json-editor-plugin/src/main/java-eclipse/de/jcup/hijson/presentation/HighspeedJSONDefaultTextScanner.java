@@ -21,13 +21,12 @@ import org.eclipse.jface.text.rules.WhitespaceRule;
 
 import de.jcup.hijson.ColorManager;
 
-
 public class HighspeedJSONDefaultTextScanner extends RuleBasedScanner {
 
-	public HighspeedJSONDefaultTextScanner(ColorManager manager) {
-		IRule[] rules = new IRule[1];
-		rules[0] = new WhitespaceRule(new HighspeedJSONWhitespaceDetector());
+    public HighspeedJSONDefaultTextScanner(ColorManager manager) {
+        IRule[] rules = new IRule[1];
+        rules[0] = new WhitespaceRule(new HighspeedJSONWhitespaceDetector());
 
-		setRules(rules);
-	}
+        setRules(rules);
+    }
 }

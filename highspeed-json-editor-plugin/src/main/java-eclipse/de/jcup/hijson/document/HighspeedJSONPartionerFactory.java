@@ -13,16 +13,16 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.document;
+package de.jcup.hijson.document;
 
 public class HighspeedJSONPartionerFactory {
 
-	public static HighspeedJSONPartitioner create(){
-		String[] legalContentTypes = HighspeedJSONDocumentIdentifiers.allIdsToStringArray();
+    public static HighspeedJSONPartitioner create() {
+        String[] legalContentTypes = HighspeedJSONDocumentIdentifiers.allIdsToStringArray();
 
-		HighspeedJSONDocumentPartitionScanner scanner = new HighspeedJSONDocumentPartitionScanner();
-		HighspeedJSONPartitioner partitioner = new HighspeedJSONPartitioner(scanner, legalContentTypes);
-		
-		return partitioner;
-	}
+        HighspeedJSONDocumentPartitionScanner scanner = new HighspeedJSONDocumentPartitionScanner();
+        HighspeedJSONPartitioner partitioner = new HighspeedJSONPartitioner(scanner, legalContentTypes);
+
+        return partitioner;
+    }
 }

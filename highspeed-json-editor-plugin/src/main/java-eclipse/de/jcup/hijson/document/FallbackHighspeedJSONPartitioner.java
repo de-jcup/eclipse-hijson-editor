@@ -23,7 +23,7 @@ import org.eclipse.jface.text.TypedRegion;
 
 public class FallbackHighspeedJSONPartitioner implements IDocumentPartitioner {
 
-    private static final String[] LEGAL_CONTENTTYPES = new String[] {IDocument.DEFAULT_CONTENT_TYPE};
+    private static final String[] LEGAL_CONTENTTYPES = new String[] { IDocument.DEFAULT_CONTENT_TYPE };
     private ITypedRegion[] PARTITITIONING = new ITypedRegion[] {};
     private IDocument document;
     private ITypedRegion documentAllRegion;

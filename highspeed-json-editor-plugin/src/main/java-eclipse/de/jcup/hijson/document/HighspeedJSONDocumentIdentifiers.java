@@ -13,46 +13,46 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.document;
+package de.jcup.hijson.document;
 
 public enum HighspeedJSONDocumentIdentifiers implements HighspeedJSONDocumentIdentifier {
-	
+
     KEY,
-    
-	COMMENT,
-	
-	STRING,
-	
-	NULL,
-	
-	BOOLEAN,
-	
-	
-	;
 
+    COMMENT,
 
-	@Override
-	public String getId() {
-		return name();
-	}
-	public static String[] allIdsToStringArray(){
-		return allIdsToStringArray(null);
-	}
-	public static String[] allIdsToStringArray(String additionalDefaultId){
-		HighspeedJSONDocumentIdentifiers[] values = values();
-		int size = values.length;
-		if (additionalDefaultId!=null){
-			size+=1;
-		}
-		String[] data = new String[size];
-		int pos=0;
-		if (additionalDefaultId!=null){
-			data[pos++]=additionalDefaultId;
-		}
-		for (HighspeedJSONDocumentIdentifiers d: values){
-			data[pos++]=d.getId();
-		}
-		return data;
-	}
+    STRING,
+
+    NULL,
+
+    BOOLEAN,
+
+    ;
+
+    @Override
+    public String getId() {
+        return name();
+    }
+
+    public static String[] allIdsToStringArray() {
+        return allIdsToStringArray(null);
+    }
+
+    public static String[] allIdsToStringArray(String additionalDefaultId) {
+        HighspeedJSONDocumentIdentifiers[] values = values();
+        int size = values.length;
+        if (additionalDefaultId != null) {
+            size += 1;
+        }
+        String[] data = new String[size];
+        int pos = 0;
+        if (additionalDefaultId != null) {
+            data[pos++] = additionalDefaultId;
+        }
+        for (HighspeedJSONDocumentIdentifiers d : values) {
+            data[pos++] = d.getId();
+        }
+        return data;
+    }
 
 }

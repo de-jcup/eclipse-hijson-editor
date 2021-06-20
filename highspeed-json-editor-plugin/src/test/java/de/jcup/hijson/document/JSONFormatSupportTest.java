@@ -33,19 +33,18 @@ public class JSONFormatSupportTest {
         textFileReader = new TextFileReader();
 
         supportToTest = new JSONFormatSupport();
-        
+
     }
-    
+
     @Test
     public void bugfix_11_array_out_of_bounds() {
         String json = textFileReader.loadBugifxTextFile("bugfix-11-array-index-out-of-bounds.json");
-        
+
         /* execute */
         FormatterResult result = supportToTest.formatJSON(json);
-        
+
         /* test */
         assertNotNull(result);
     }
-    
 
 }

@@ -13,20 +13,21 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.outline;
+package de.jcup.hijson.outline;
 
 public enum ItemType {
-	
-	JSON_NODE, 
-	
-	META_INFO, 
-	
-	META_ERROR,
-	
-	META_DEBUG, 
-	
-	/**
-	 * Represents a node containing other nodes - used to handle arrays too big and so slow in tree
-	 */
-	VIRTUAL_ARRAY_SEGMENT_NODE
+
+    JSON_NODE,
+
+    META_INFO,
+
+    META_ERROR,
+
+    META_DEBUG,
+
+    /**
+     * Represents a node containing other nodes - used to handle arrays too big and
+     * so slow in tree
+     */
+    VIRTUAL_ARRAY_SEGMENT_NODE
 }

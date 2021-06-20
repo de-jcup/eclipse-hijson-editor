@@ -13,9 +13,9 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.document;
+package de.jcup.hijson.document;
 
 public interface HighspeedJSONDocumentIdentifier {
 
-	public String getId();
+    public String getId();
 }

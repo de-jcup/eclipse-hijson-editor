@@ -13,7 +13,7 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.handlers;
+package de.jcup.hijson.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -28,36 +28,37 @@ import de.jcup.hijson.HighspeedJSONEditor;
 
 public abstract class AbstractHighspeedJSONEditorHandler extends AbstractHandler {
 
-	public AbstractHighspeedJSONEditorHandler() {
-		super();
-	}
+    public AbstractHighspeedJSONEditorHandler() {
+        super();
+    }
 
-	/**
-	 * Execute something by using gradle editor instance
-	 * @param jsonEditor - never <code>null</code>
-	 */
-	protected abstract void executeOnHighspeedJSONEditor(HighspeedJSONEditor jsonEditor);
+    /**
+     * Execute something by using gradle editor instance
+     * 
+     * @param jsonEditor - never <code>null</code>
+     */
+    protected abstract void executeOnHighspeedJSONEditor(HighspeedJSONEditor jsonEditor);
 
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		if (workbench==null){
-			return null;
-		}
-		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
-		if (activeWorkbenchWindow==null){
-			return null;
-		}
-		IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
-		if (activePage==null){
-			return null;
-		}
-		IEditorPart editor = activePage.getActiveEditor();
-		
-		if (editor instanceof HighspeedJSONEditor){
-			executeOnHighspeedJSONEditor((HighspeedJSONEditor) editor);
-		}
-		return null;
-	}
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        if (workbench == null) {
+            return null;
+        }
+        IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+        if (activeWorkbenchWindow == null) {
+            return null;
+        }
+        IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
+        if (activePage == null) {
+            return null;
+        }
+        IEditorPart editor = activePage.getActiveEditor();
+
+        if (editor instanceof HighspeedJSONEditor) {
+            executeOnHighspeedJSONEditor((HighspeedJSONEditor) editor);
+        }
+        return null;
+    }
 
 }

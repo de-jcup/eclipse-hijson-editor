@@ -22,9 +22,9 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
 public class TextFileReader {
-    
+
     public String loadTextFile(File file) {
-        return loadTextFile(file,"\n");
+        return loadTextFile(file, "\n");
     }
 
     public String loadTextFile(File file, String lineBreak) {
@@ -48,6 +48,6 @@ public class TextFileReader {
     }
 
     public String loadBugifxTextFile(String bugfixFileName) {
-        return loadTextFile(new File("./../highspeed-json-editor-other/testscripts/bugfixes/"+bugfixFileName));
+        return loadTextFile(new File("./../highspeed-json-editor-other/testscripts/bugfixes/" + bugfixFileName));
     }
 }

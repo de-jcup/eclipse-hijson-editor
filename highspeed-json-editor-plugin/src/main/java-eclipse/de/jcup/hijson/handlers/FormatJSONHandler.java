@@ -13,16 +13,15 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.handlers;
+package de.jcup.hijson.handlers;
 
 import de.jcup.hijson.HighspeedJSONEditor;
 
-public class FormatJSONHandler extends AbstractHighspeedJSONEditorHandler{
+public class FormatJSONHandler extends AbstractHighspeedJSONEditorHandler {
 
-	@Override
-	protected void executeOnHighspeedJSONEditor(HighspeedJSONEditor jsonEditor) {
-		jsonEditor.formatJSON();
-	}
-
+    @Override
+    protected void executeOnHighspeedJSONEditor(HighspeedJSONEditor jsonEditor) {
+        jsonEditor.formatJSON();
+    }
 
 }

@@ -17,8 +17,8 @@ package de.jcup.hijson.script;
 
 public interface HighSpeedJSONModelBuilder {
 
-    HighspeedJSONModel build(String text);
+    HighspeedJSONModel build(String text, int tresholdGroupArrays);
 
-    HighspeedJSONModel build(String text, boolean ignoreFailures);
+    HighspeedJSONModel build(String text, int tresholdGroupArrays, boolean ignoreFailures);
 
 }

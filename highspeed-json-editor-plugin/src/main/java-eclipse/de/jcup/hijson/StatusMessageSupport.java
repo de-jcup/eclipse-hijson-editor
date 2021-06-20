@@ -13,15 +13,16 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson;
+package de.jcup.hijson;
 
 /**
  * Adapter interface to provide status messaging
+ * 
  * @author Albert Tregnaghi
  *
  */
 public interface StatusMessageSupport {
 
-	void setErrorMessage(String message);
+    void setErrorMessage(String message);
 
 }

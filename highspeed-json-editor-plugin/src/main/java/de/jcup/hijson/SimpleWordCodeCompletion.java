@@ -25,129 +25,129 @@ import java.util.TreeSet;
 
 public class SimpleWordCodeCompletion {
 
-	private Set<String> additionalWordsCache = new HashSet<>();
+    private Set<String> additionalWordsCache = new HashSet<>();
 
-	private SortedSet<String> allWordsCache = new TreeSet<>();
+    private SortedSet<String> allWordsCache = new TreeSet<>();
 
-	private WordListBuilder wordListBuilder;
+    private WordListBuilder wordListBuilder;
 
-	/**
-	 * Adds an additional word - will be removed on all of {@link #reset()}
-	 * 
-	 * @param word
-	 */
-	public void add(String word) {
-		if (word == null) {
-			return;
-		}
-		if (!allWordsCache.isEmpty()) {
-			allWordsCache.clear(); // reset the all words cache so rebuild will
-									// be triggered
-		}
-		additionalWordsCache.add(word.trim());
-	}
+    /**
+     * Adds an additional word - will be removed on all of {@link #reset()}
+     * 
+     * @param word
+     */
+    public void add(String word) {
+        if (word == null) {
+            return;
+        }
+        if (!allWordsCache.isEmpty()) {
+            allWordsCache.clear(); // reset the all words cache so rebuild will
+                                   // be triggered
+        }
+        additionalWordsCache.add(word.trim());
+    }
 
-	/**
-	 * Calculates the resulting proposals for given offset.
-	 * 
-	 * @param source
-	 * @param offset
-	 * @return proposals, never <code>null</code>
-	 */
-	public Set<String> calculate(String source, int offset) {
-		rebuildCacheIfNecessary(source);
-		if (offset == 0) {
-			return unmodifiableSet(allWordsCache);
-		}
-		String wanted = getTextbefore(source, offset);
-		return filter(allWordsCache, wanted);
-	}
+    /**
+     * Calculates the resulting proposals for given offset.
+     * 
+     * @param source
+     * @param offset
+     * @return proposals, never <code>null</code>
+     */
+    public Set<String> calculate(String source, int offset) {
+        rebuildCacheIfNecessary(source);
+        if (offset == 0) {
+            return unmodifiableSet(allWordsCache);
+        }
+        String wanted = getTextbefore(source, offset);
+        return filter(allWordsCache, wanted);
+    }
 
-	/**
-	 * Resolves text before given offset
-	 * 
-	 * @param source
-	 * @param offset
-	 * @return text, never <code>null</code>
-	 */
-	public String getTextbefore(String source, int offset) {
-		if (source == null || source.isEmpty()) {
-			return "";
-		}
-		if (offset <= 0) {
-			return "";
-		}
-		int sourceLength = source.length();
-		if (offset > sourceLength) {
-			return "";
-		}
-		StringBuilder sb = new StringBuilder();
-		int current = offset - 1; // -1 because we want the char before
-		boolean ongoing = false;
-		do {
-			if (current < 0) {
-				break;
-			}
-			char c = source.charAt(current--);
-			ongoing = !Character.isWhitespace(c);
-			if (ongoing) {
-				sb.insert(0, c);
-			}
-		} while (ongoing);
+    /**
+     * Resolves text before given offset
+     * 
+     * @param source
+     * @param offset
+     * @return text, never <code>null</code>
+     */
+    public String getTextbefore(String source, int offset) {
+        if (source == null || source.isEmpty()) {
+            return "";
+        }
+        if (offset <= 0) {
+            return "";
+        }
+        int sourceLength = source.length();
+        if (offset > sourceLength) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        int current = offset - 1; // -1 because we want the char before
+        boolean ongoing = false;
+        do {
+            if (current < 0) {
+                break;
+            }
+            char c = source.charAt(current--);
+            ongoing = !Character.isWhitespace(c);
+            if (ongoing) {
+                sb.insert(0, c);
+            }
+        } while (ongoing);
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
-	/**
-	 * Reset allWordsCache
-	 * 
-	 * @return completion
-	 */
-	public SimpleWordCodeCompletion reset() {
-		allWordsCache.clear();
-		additionalWordsCache.clear();
-		return this;
-	}
+    /**
+     * Reset allWordsCache
+     * 
+     * @return completion
+     */
+    public SimpleWordCodeCompletion reset() {
+        allWordsCache.clear();
+        additionalWordsCache.clear();
+        return this;
+    }
 
-	Set<String> filter(SortedSet<String> allWords, String wanted) {
-		if (wanted == null || wanted.isEmpty()) {
-			return allWords;
-		}
-		LinkedHashSet<String> filtered = new LinkedHashSet<>();
-		LinkedHashSet<String> addAfterEnd = new LinkedHashSet<>();
-		String wantedLowerCase = wanted.toLowerCase();
+    Set<String> filter(SortedSet<String> allWords, String wanted) {
+        if (wanted == null || wanted.isEmpty()) {
+            return allWords;
+        }
+        LinkedHashSet<String> filtered = new LinkedHashSet<>();
+        LinkedHashSet<String> addAfterEnd = new LinkedHashSet<>();
+        String wantedLowerCase = wanted.toLowerCase();
 
-		for (String word : allWords) {
-			String wordLowerCase = word.toLowerCase();
-			if (wordLowerCase.startsWith(wantedLowerCase)) {
-				filtered.add(word);
-			} else if (wordLowerCase.indexOf(wantedLowerCase) != -1) {
-				addAfterEnd.add(word);
-			}
-		}
-		filtered.addAll(addAfterEnd);
-		/* remove wanted itself */
-		filtered.remove(wanted);
-		return filtered;
-	}
+        for (String word : allWords) {
+            String wordLowerCase = word.toLowerCase();
+            if (wordLowerCase.startsWith(wantedLowerCase)) {
+                filtered.add(word);
+            } else if (wordLowerCase.indexOf(wantedLowerCase) != -1) {
+                addAfterEnd.add(word);
+            }
+        }
+        filtered.addAll(addAfterEnd);
+        /* remove wanted itself */
+        filtered.remove(wanted);
+        return filtered;
+    }
 
-	private void rebuildCacheIfNecessary(String source) {
-		if (allWordsCache.isEmpty()) {
-			allWordsCache.addAll(additionalWordsCache);
-			allWordsCache.addAll(getWordListBuilder().build(source));
-			// we do not want the empty String
-			allWordsCache.remove("");
-		}
-	}
+    private void rebuildCacheIfNecessary(String source) {
+        if (allWordsCache.isEmpty()) {
+            allWordsCache.addAll(additionalWordsCache);
+            allWordsCache.addAll(getWordListBuilder().build(source));
+            // we do not want the empty String
+            allWordsCache.remove("");
+        }
+    }
 
-	public WordListBuilder getWordListBuilder() {
-		if (wordListBuilder == null) {
-			wordListBuilder = new SimpleWordListBuilder();
-		}
-		return wordListBuilder;
-	}
+    public WordListBuilder getWordListBuilder() {
+        if (wordListBuilder == null) {
+            wordListBuilder = new SimpleWordListBuilder();
+        }
+        return wordListBuilder;
+    }
 
-	public void setWordListBuilder(WordListBuilder wordListBuilder) {
-		this.wordListBuilder = wordListBuilder;
-	}
+    public void setWordListBuilder(WordListBuilder wordListBuilder) {
+        this.wordListBuilder = wordListBuilder;
+    }
 }

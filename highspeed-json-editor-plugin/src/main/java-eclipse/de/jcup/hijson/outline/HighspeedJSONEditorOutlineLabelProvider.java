@@ -29,8 +29,6 @@ import de.jcup.hijson.EclipseUtil;
 import de.jcup.hijson.HighspeedJSONEditorActivator;
 import de.jcup.hijson.HighspeedJSONEditorColorConstants;
 import de.jcup.hijson.SimpleStringUtils;
-import de.jcup.hijson.outline.Item;
-import de.jcup.hijson.outline.ItemType;
 
 public class HighspeedJSONEditorOutlineLabelProvider extends BaseLabelProvider implements IStyledLabelProvider, IColorProvider {
 

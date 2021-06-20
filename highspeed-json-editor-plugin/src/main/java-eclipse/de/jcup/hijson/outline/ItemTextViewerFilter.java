@@ -16,8 +16,7 @@
 package de.jcup.hijson.outline;
 
 import de.jcup.hijson.AbstractTreeViewerFilter;
-import de.jcup.hijson.outline.Item;
 
 class ItemTextViewerFilter extends AbstractTreeViewerFilter<Item> {
-	
+
 }

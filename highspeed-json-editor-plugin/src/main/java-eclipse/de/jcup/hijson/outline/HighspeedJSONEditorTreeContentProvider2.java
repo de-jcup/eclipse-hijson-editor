@@ -80,7 +80,7 @@ public class HighspeedJSONEditorTreeContentProvider2 implements ITreeContentProv
             this.model = model;
             Item rootItem = model != null ? model.getRootItem() : null;
             Item item = null;
-            
+
             if (outlineEnabled && rootItem != null) {
                 item = rootItem;
             } else {

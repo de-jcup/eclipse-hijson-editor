@@ -49,6 +49,7 @@ import de.jcup.hijson.document.HighspeedJSONDocumentIdentifier;
 import de.jcup.hijson.document.HighspeedJSONDocumentIdentifiers;
 import de.jcup.hijson.presentation.HighspeedJSONDefaultTextScanner;
 import de.jcup.hijson.presentation.PresentationSupport;
+
 /**
  * 
  * @author Albert Tregnaghi
@@ -56,137 +57,139 @@ import de.jcup.hijson.presentation.PresentationSupport;
  */
 public class HighspeedJSONSourceViewerConfiguration extends TextSourceViewerConfiguration {
 
-	private HighspeedJSONDefaultTextScanner scanner;
-	private ColorManager colorManager;
+    private HighspeedJSONDefaultTextScanner scanner;
+    private ColorManager colorManager;
 
-	private TextAttribute defaultTextAttribute;
-	private HighspeedJSONEditorAnnotationHoover annotationHoover;
-	private IAdaptable adaptable;
-	private ContentAssistant contentAssistant;
-	private HighspeedJSONEditorSimpleWordContentAssistProcessor contentAssistProcessor;
-	
-	/**
-	 * Creates configuration by given adaptable
-	 * 
-	 * @param adaptable
-	 *            must provide {@link ColorManager} and {@link IFile}
-	 */
-	public HighspeedJSONSourceViewerConfiguration(IAdaptable adaptable) {
-		IPreferenceStore generalTextStore = EditorsUI.getPreferenceStore();
-		this.fPreferenceStore = new ChainedPreferenceStore(
-				new IPreferenceStore[] { getPreferences().getPreferenceStore(), generalTextStore });
+    private TextAttribute defaultTextAttribute;
+    private HighspeedJSONEditorAnnotationHoover annotationHoover;
+    private IAdaptable adaptable;
+    private ContentAssistant contentAssistant;
+    private HighspeedJSONEditorSimpleWordContentAssistProcessor contentAssistProcessor;
 
-		Assert.isNotNull(adaptable, "adaptable may not be null!");
-		this.annotationHoover = new HighspeedJSONEditorAnnotationHoover();
-		
-		this.contentAssistant = new ContentAssistant();
-		contentAssistProcessor = new HighspeedJSONEditorSimpleWordContentAssistProcessor();
-		contentAssistant.enableColoredLabels(true);
-		
-		contentAssistant.setContentAssistProcessor(contentAssistProcessor, IDocument.DEFAULT_CONTENT_TYPE);
-		for (HighspeedJSONDocumentIdentifier identifier: HighspeedJSONDocumentIdentifiers.values()){
-			contentAssistant.setContentAssistProcessor(contentAssistProcessor, identifier.getId());
-		}
-		
-		contentAssistant.addCompletionListener(contentAssistProcessor.getCompletionListener());
+    /**
+     * Creates configuration by given adaptable
+     * 
+     * @param adaptable must provide {@link ColorManager} and {@link IFile}
+     */
+    public HighspeedJSONSourceViewerConfiguration(IAdaptable adaptable) {
+        IPreferenceStore generalTextStore = EditorsUI.getPreferenceStore();
+        this.fPreferenceStore = new ChainedPreferenceStore(new IPreferenceStore[] { getPreferences().getPreferenceStore(), generalTextStore });
 
-		this.colorManager = adaptable.getAdapter(ColorManager.class);
-		Assert.isNotNull(colorManager, " adaptable must support color manager");
-		this.defaultTextAttribute = new TextAttribute(
-				colorManager.getColor(getPreferences().getColor(COLOR_NORMAL_TEXT)));
-		this.adaptable=adaptable;
-	}
-	public IContentAssistant getContentAssistant(ISourceViewer sourceViewer) {
-		return contentAssistant;
-	}
-	
-	@Override
-	public IQuickAssistAssistant getQuickAssistAssistant(ISourceViewer sourceViewer) {
-		/* currently we avoid the default quick assistence parts (spell checking etc.)*/
-		return null;
-	}
-	public IReconciler getReconciler(ISourceViewer sourceViewer) {
-		/* currently we avoid the default reconciler mechanism parts (spell checking etc.)*/
-		return null;
-	}
-	
-	@Override
-	public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
-		return annotationHoover;
-	}
-	
-	private class HighspeedJSONEditorAnnotationHoover extends DefaultAnnotationHover {
-		@Override
-		protected boolean isIncluded(Annotation annotation) {
-			if (annotation instanceof MarkerAnnotation) {
-				return true;
-			}
-			/* we do not support other annotations */
-			return false;
-		}
-	}
+        Assert.isNotNull(adaptable, "adaptable may not be null!");
+        this.annotationHoover = new HighspeedJSONEditorAnnotationHoover();
 
-	@Override
-	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
-		/* @formatter:off */
+        this.contentAssistant = new ContentAssistant();
+        contentAssistProcessor = new HighspeedJSONEditorSimpleWordContentAssistProcessor();
+        contentAssistant.enableColoredLabels(true);
+
+        contentAssistant.setContentAssistProcessor(contentAssistProcessor, IDocument.DEFAULT_CONTENT_TYPE);
+        for (HighspeedJSONDocumentIdentifier identifier : HighspeedJSONDocumentIdentifiers.values()) {
+            contentAssistant.setContentAssistProcessor(contentAssistProcessor, identifier.getId());
+        }
+
+        contentAssistant.addCompletionListener(contentAssistProcessor.getCompletionListener());
+
+        this.colorManager = adaptable.getAdapter(ColorManager.class);
+        Assert.isNotNull(colorManager, " adaptable must support color manager");
+        this.defaultTextAttribute = new TextAttribute(colorManager.getColor(getPreferences().getColor(COLOR_NORMAL_TEXT)));
+        this.adaptable = adaptable;
+    }
+
+    public IContentAssistant getContentAssistant(ISourceViewer sourceViewer) {
+        return contentAssistant;
+    }
+
+    @Override
+    public IQuickAssistAssistant getQuickAssistAssistant(ISourceViewer sourceViewer) {
+        /*
+         * currently we avoid the default quick assistence parts (spell checking etc.)
+         */
+        return null;
+    }
+
+    public IReconciler getReconciler(ISourceViewer sourceViewer) {
+        /*
+         * currently we avoid the default reconciler mechanism parts (spell checking
+         * etc.)
+         */
+        return null;
+    }
+
+    @Override
+    public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
+        return annotationHoover;
+    }
+
+    private class HighspeedJSONEditorAnnotationHoover extends DefaultAnnotationHover {
+        @Override
+        protected boolean isIncluded(Annotation annotation) {
+            if (annotation instanceof MarkerAnnotation) {
+                return true;
+            }
+            /* we do not support other annotations */
+            return false;
+        }
+    }
+
+    @Override
+    public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
+        /* @formatter:off */
 		return allIdsToStringArray( 
 				IDocument.DEFAULT_CONTENT_TYPE);
 		/* @formatter:on */
-	}
+    }
 
-	@Override
-	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
-		PresentationReconciler reconciler = new PresentationReconciler();
+    @Override
+    public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
+        PresentationReconciler reconciler = new PresentationReconciler();
 
-		addDefaultPresentation(reconciler);
+        addDefaultPresentation(reconciler);
 
-		addPresentation(reconciler, STRING.getId(), getPreferences().getColor(COLOR_STRING),SWT.NONE);
-		
-		addPresentation(reconciler, COMMENT.getId(), getPreferences().getColor(COLOR_COMMENT),SWT.NONE);
+        addPresentation(reconciler, STRING.getId(), getPreferences().getColor(COLOR_STRING), SWT.NONE);
 
-		addPresentation(reconciler, NULL.getId(), getPreferences().getColor(COLOR_NULL),SWT.NONE);
+        addPresentation(reconciler, COMMENT.getId(), getPreferences().getColor(COLOR_COMMENT), SWT.NONE);
 
-		addPresentation(reconciler, KEY.getId(), getPreferences().getColor(COLOR_KEY),SWT.NONE);
+        addPresentation(reconciler, NULL.getId(), getPreferences().getColor(COLOR_NULL), SWT.NONE);
 
-		addPresentation(reconciler, BOOLEAN.getId(), getPreferences().getColor(COLOR_BOOLEAN),SWT.NONE);
-		
-		return reconciler;
-	}
+        addPresentation(reconciler, KEY.getId(), getPreferences().getColor(COLOR_KEY), SWT.NONE);
 
-	private void addDefaultPresentation(PresentationReconciler reconciler) {
-		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getDefaultTextScanner());
-		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
-		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
-	}
+        addPresentation(reconciler, BOOLEAN.getId(), getPreferences().getColor(COLOR_BOOLEAN), SWT.NONE);
 
-	private IToken createColorToken(RGB rgb) {
-		Token token = new Token(new TextAttribute(colorManager.getColor(rgb)));
-		return token;
-	}
+        return reconciler;
+    }
 
-	private void addPresentation(PresentationReconciler reconciler, String id, RGB rgb, int style) {
-		TextAttribute textAttribute = new TextAttribute(colorManager.getColor(rgb),
-				defaultTextAttribute.getBackground(), style);
-		PresentationSupport presentation = new PresentationSupport(textAttribute);
-		reconciler.setDamager(presentation, id);
-		reconciler.setRepairer(presentation, id);
-	}
+    private void addDefaultPresentation(PresentationReconciler reconciler) {
+        DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getDefaultTextScanner());
+        reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
+        reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
+    }
 
-	private HighspeedJSONDefaultTextScanner getDefaultTextScanner() {
-		if (scanner == null) {
-			scanner = new HighspeedJSONDefaultTextScanner(colorManager);
-			updateTextScannerDefaultColorToken();
-		}
-		return scanner;
-	}
+    private IToken createColorToken(RGB rgb) {
+        Token token = new Token(new TextAttribute(colorManager.getColor(rgb)));
+        return token;
+    }
 
-	public void updateTextScannerDefaultColorToken() {
-		if (scanner == null) {
-			return;
-		}
-		RGB color = getPreferences().getColor(COLOR_NORMAL_TEXT);
-		scanner.setDefaultReturnToken(createColorToken(color));
-	}
-	
+    private void addPresentation(PresentationReconciler reconciler, String id, RGB rgb, int style) {
+        TextAttribute textAttribute = new TextAttribute(colorManager.getColor(rgb), defaultTextAttribute.getBackground(), style);
+        PresentationSupport presentation = new PresentationSupport(textAttribute);
+        reconciler.setDamager(presentation, id);
+        reconciler.setRepairer(presentation, id);
+    }
+
+    private HighspeedJSONDefaultTextScanner getDefaultTextScanner() {
+        if (scanner == null) {
+            scanner = new HighspeedJSONDefaultTextScanner(colorManager);
+            updateTextScannerDefaultColorToken();
+        }
+        return scanner;
+    }
+
+    public void updateTextScannerDefaultColorToken() {
+        if (scanner == null) {
+            return;
+        }
+        RGB color = getPreferences().getColor(COLOR_NORMAL_TEXT);
+        scanner.setDefaultReturnToken(createColorToken(color));
+    }
 
 }

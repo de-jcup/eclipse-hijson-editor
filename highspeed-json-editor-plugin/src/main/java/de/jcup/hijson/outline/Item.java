@@ -13,7 +13,7 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.outline;
+package de.jcup.hijson.outline;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,14 +22,15 @@ import java.util.List;
 public class Item {
 
     ItemVariant itemVariant;
-	public ItemVariant getItemVariant() {
+
+    public ItemVariant getItemVariant() {
         return itemVariant;
     }
 
     public void setItemVariant(ItemVariant itemVariant) {
         this.itemVariant = itemVariant;
-        
-        this.variant=itemVariant!=null ? itemVariant.getText(): null;
+
+        this.variant = itemVariant != null ? itemVariant.getText() : null;
     }
 
     public ItemType getType() {
@@ -41,45 +42,43 @@ public class Item {
     }
 
     ItemType type;
-	String name;
-	String variant;
-	int offset;
-	int length;
-	int endOffset;
-	Item parent;
-    List<Item> children =Collections.emptyList(); // initial only empty list
+    String name;
+    String variant;
+    int offset;
+    int length;
+    int endOffset;
+    Item parent;
+    List<Item> children = Collections.emptyList(); // initial only empty list
     private String content;
-	
-	/**
-	 * @return item type , or <code>null</code>
-	 */
-	public ItemType getItemType(){
-		return type;
-	}
 
-	public String getName() {
-		return name;
-	}
+    /**
+     * @return item type , or <code>null</code>
+     */
+    public ItemType getItemType() {
+        return type;
+    }
 
-	public int getOffset() {
-		return offset;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getLength() {
-		return length;
-	}
-	
-	public int getEndOffset() {
-		return endOffset;
-	}
-	
-	public String getVariant() {
+    public int getOffset() {
+        return offset;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getEndOffset() {
+        return endOffset;
+    }
+
+    public String getVariant() {
         return variant;
     }
-	
-	
-	
-	public void setType(ItemType type) {
+
+    public void setType(ItemType type) {
         this.type = type;
     }
 
@@ -110,51 +109,53 @@ public class Item {
     public void setChildren(List<Item> children) {
         this.children = children;
     }
-    
+
     public List<Item> getChildren() {
         return children;
     }
-    
+
     /**
      * Adds given item as a child and marks this as parent of child
+     * 
      * @param item
      */
     public void addChild(Item item) {
-        if (! (children instanceof ArrayList)) {
+        if (!(children instanceof ArrayList)) {
             children = new ArrayList<Item>();
         }
         item.setParent(this);
         children.add(item);
     }
+
     public void setContent(String content) {
-        this.content=content;
+        this.content = content;
     }
-    
+
     public String getContent() {
         return content;
     }
 
     @Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Item:");
-		sb.append("name:");
-		sb.append(name);
-		sb.append(",type:");
-		sb.append(type);
-		sb.append(",variant:");
-		sb.append(variant);
-		sb.append(",offset:");
-		sb.append(offset);
-		sb.append(",length:");
-		sb.append(length);
-		sb.append(",endOffset:");
-		sb.append(endOffset);
-		return sb.toString();
-	}
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Item:");
+        sb.append("name:");
+        sb.append(name);
+        sb.append(",type:");
+        sb.append(type);
+        sb.append(",variant:");
+        sb.append(variant);
+        sb.append(",offset:");
+        sb.append(offset);
+        sb.append(",length:");
+        sb.append(length);
+        sb.append(",endOffset:");
+        sb.append(endOffset);
+        return sb.toString();
+    }
 
-	public String buildSearchString() {
-		return name;
-	}
+    public String buildSearchString() {
+        return name;
+    }
 
 }

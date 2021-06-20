@@ -17,14 +17,12 @@ package de.jcup.hijson.outline;
 
 import de.jcup.hijson.AbstractTextMatcher;
 
-
 public class ItemTextMatcher extends AbstractTextMatcher<Item> {
 
-	@Override
-	protected String createItemText(Item item) {
-		String itemText = item.buildSearchString();
-		return itemText;
-	}
+    @Override
+    protected String createItemText(Item item) {
+        String itemText = item.buildSearchString();
+        return itemText;
+    }
 
-	
 }

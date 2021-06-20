@@ -26,8 +26,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ValueNode;
 
-import de.jcup.hijson.outline.Item;
-import de.jcup.hijson.outline.ItemType;
 import de.jcup.hijson.script.HighspeedJSONError;
 import de.jcup.hijson.script.HighspeedJSONModel;
 
@@ -38,7 +36,7 @@ public class HighspeedJSONEditorTreeContentProvider implements ITreeContentProvi
     private static final String JSON_MODEL_EMPTY_OR_INVALID = "Empty JSON or invalid";
     private static final String JSON_MODEL_DISABLED = "Outline disabled - must be enabled by menu or toolbar";
     private static final Object[] RESULT_WHEN_EMPTY = new Object[] { JSON_MODEL_EMPTY_OR_INVALID };
-    
+
     private Object[] items;
     private Object monitor = new Object();
     boolean outlineEnabled;
@@ -110,7 +108,7 @@ public class HighspeedJSONEditorTreeContentProvider implements ITreeContentProvi
         } else {
             return new Item[] { createNodeItemAndChildren(rootNode, "root") };
         }
-        
+
         if (model != null && model.hasErrors()) {
             for (HighspeedJSONError error : model.getErrors()) {
                 Item item = new Item();

@@ -13,16 +13,16 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson;
-
+package de.jcup.hijson;
 
 public interface Matcher<T> {
 
-	/**
-	 * Returns true when matcher matches
-	 * @param toMatch
-	 * @return <code>true</code> when matching
-	 */
-	public boolean matches(T toMatch) ;
+    /**
+     * Returns true when matcher matches
+     * 
+     * @param toMatch
+     * @return <code>true</code> when matching
+     */
+    public boolean matches(T toMatch);
 
 }

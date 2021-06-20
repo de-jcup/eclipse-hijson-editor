@@ -13,15 +13,15 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.document;
+package de.jcup.hijson.document;
 
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
 
-public class HighspeedJSONPartitioner extends FastPartitioner{
+public class HighspeedJSONPartitioner extends FastPartitioner {
 
-	public HighspeedJSONPartitioner(IPartitionTokenScanner scanner, String[] legalContentTypes) {
-		super(scanner, legalContentTypes);
-	}
+    public HighspeedJSONPartitioner(IPartitionTokenScanner scanner, String[] legalContentTypes) {
+        super(scanner, legalContentTypes);
+    }
 
 }

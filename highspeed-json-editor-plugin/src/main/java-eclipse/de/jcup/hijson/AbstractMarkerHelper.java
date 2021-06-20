@@ -62,7 +62,7 @@ abstract class AbstractMarkerHelper {
         createMarker(resource, message, lineNumber, markerType, IMarker.SEVERITY_ERROR, charStart, charEnd);
     }
 
-    public void createMarker(IResource resource, String message, int lineNumber,int severity, int charStart, int charEnd) throws CoreException {
+    public void createMarker(IResource resource, String message, int lineNumber, int severity, int charStart, int charEnd) throws CoreException {
         this.createMarker(resource, message, lineNumber, markerType, severity, charStart, charEnd);
     }
 

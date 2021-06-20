@@ -18,7 +18,6 @@ package de.jcup.hijson.document;
 import org.eclipse.jface.text.Document;
 
 import de.jcup.hijson.HighspeedJSONEditor;
-import de.jcup.hijson.document.JSONFormatSupport;
 import de.jcup.hijson.document.JSONFormatSupport.FormatterResult;
 
 public class HighspeedJSONDocument extends Document {
@@ -26,7 +25,7 @@ public class HighspeedJSONDocument extends Document {
     private HighspeedJSONEditor editor;
 
     public HighspeedJSONDocument(HighspeedJSONEditor editor) {
-        this.editor=editor;
+        this.editor = editor;
     }
 
     public void set(String text, long modificationStamp) {
@@ -39,7 +38,7 @@ public class HighspeedJSONDocument extends Document {
             editor.markDirtyBecauseFormatWasNecessaryForOneLinerHandling();
         }
     }
-    
+
     public void setFormatted(String text) {
         super.set(text, getModificationStamp());
     }

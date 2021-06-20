@@ -13,13 +13,13 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.document;
+package de.jcup.hijson.document;
 
 public class FallbackHighspeedJSONPartionerFactory {
 
-	public static FallbackHighspeedJSONPartitioner create(){
-		FallbackHighspeedJSONPartitioner partitioner = new FallbackHighspeedJSONPartitioner();
-		
-		return partitioner;
-	}
+    public static FallbackHighspeedJSONPartitioner create() {
+        FallbackHighspeedJSONPartitioner partitioner = new FallbackHighspeedJSONPartitioner();
+
+        return partitioner;
+    }
 }

@@ -13,47 +13,47 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson;
+package de.jcup.hijson;
 
 public class SimpleStringUtils {
-	private static final String EMPTY = "";
-	
-	public static boolean equals(String text1, String text2) {
-		if (text1 == null) {
-			if (text2 == null) {
-				return true;
-			}
-			return false;
-		}
-		if (text2 == null) {
-			return false;
-		}
-		return text2.equals(text1);
-	}
+    private static final String EMPTY = "";
 
-	public static String shortString(String string, int max) {
-		if (max==0){
-			return EMPTY;
-		}
-		if (string ==null){
-			return EMPTY;
-		}
-		if (string.length()<=max){
-			return string;
-		}
-		/* length > max */
-		if (max==1){
-			return ".";
-		}
-		if (max==2){
-			return "..";
-		}
-		if (max==3){
-			return "...";
-		}
-		StringBuilder sb  =new StringBuilder();
-		sb.append( string.substring(0, max-3));
-		sb.append("...");
-		return sb.toString();
-	}
+    public static boolean equals(String text1, String text2) {
+        if (text1 == null) {
+            if (text2 == null) {
+                return true;
+            }
+            return false;
+        }
+        if (text2 == null) {
+            return false;
+        }
+        return text2.equals(text1);
+    }
+
+    public static String shortString(String string, int max) {
+        if (max == 0) {
+            return EMPTY;
+        }
+        if (string == null) {
+            return EMPTY;
+        }
+        if (string.length() <= max) {
+            return string;
+        }
+        /* length > max */
+        if (max == 1) {
+            return ".";
+        }
+        if (max == 2) {
+            return "..";
+        }
+        if (max == 3) {
+            return "...";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(string.substring(0, max - 3));
+        sb.append("...");
+        return sb.toString();
+    }
 }

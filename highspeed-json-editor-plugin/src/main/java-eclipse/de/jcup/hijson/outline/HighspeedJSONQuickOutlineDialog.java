@@ -29,8 +29,6 @@ import de.jcup.hijson.AbstractTreeViewerFilter;
 import de.jcup.hijson.FilterPatternMatcher;
 import de.jcup.hijson.HighspeedJSONEditor;
 import de.jcup.hijson.HighspeedJSONEditorActivator;
-import de.jcup.hijson.outline.Item;
-import de.jcup.hijson.outline.ItemTextMatcher;
 
 /**
  * This dialog is inspired by: <a href=
@@ -43,90 +41,88 @@ import de.jcup.hijson.outline.ItemTextMatcher;
  */
 public class HighspeedJSONQuickOutlineDialog extends AbstractFilterableTreeQuickDialog<Item> {
 
-	private static final int MIN_WIDTH = 400;
-	private static final int MIN_HEIGHT = 300;
+    private static final int MIN_WIDTH = 400;
+    private static final int MIN_HEIGHT = 300;
 
-	private HighspeedJSONEditor editor;
+    private HighspeedJSONEditor editor;
 
-	/**
-	 * Creates a quick outline dialog
-	 * 
-	 * @param adaptable
-	 *            an adapter which should be able to provide a tree content
-	 *            provider and gradle editor. If gradle editor is not set a
-	 *            selected item will only close the dialog but do not select
-	 *            editor parts..
-	 * @param parent
-	 *            shell to use is null the outline will have no content! If the
-	 *            gradle editor is null location setting etc. will not work.
-	 * @param infoText
-	 *            information to show at bottom of dialog
-	 */
-	public HighspeedJSONQuickOutlineDialog(IAdaptable adaptable, Shell parent, String infoText) {
-		super(adaptable, parent, "HighspeedJSON quick outline", MIN_WIDTH, MIN_HEIGHT, infoText);
-		this.editor = adaptable.getAdapter(HighspeedJSONEditor.class);
-	}
+    /**
+     * Creates a quick outline dialog
+     * 
+     * @param adaptable an adapter which should be able to provide a tree content
+     *                  provider and gradle editor. If gradle editor is not set a
+     *                  selected item will only close the dialog but do not select
+     *                  editor parts..
+     * @param parent    shell to use is null the outline will have no content! If
+     *                  the gradle editor is null location setting etc. will not
+     *                  work.
+     * @param infoText  information to show at bottom of dialog
+     */
+    public HighspeedJSONQuickOutlineDialog(IAdaptable adaptable, Shell parent, String infoText) {
+        super(adaptable, parent, "HighspeedJSON quick outline", MIN_WIDTH, MIN_HEIGHT, infoText);
+        this.editor = adaptable.getAdapter(HighspeedJSONEditor.class);
+    }
 
-	@Override
-	protected ITreeContentProvider createTreeContentProvider(IAdaptable adaptable) {
-		return adaptable.getAdapter(ITreeContentProvider.class);
-	}
+    @Override
+    protected ITreeContentProvider createTreeContentProvider(IAdaptable adaptable) {
+        return adaptable.getAdapter(ITreeContentProvider.class);
+    }
 
-	@Override
-	protected void openSelectionImpl(ISelection selection, String filterText) {
-		if (editor == null) {
-			return;
-		}
-		HighspeedJSONEditorContentOutlinePage outlinePage = editor.getOutlinePage();
-		boolean outlineAvailable = outlinePageVisible(outlinePage);
-		if (outlineAvailable){
-			/*
-			 * select part in editor - grab focus not necessary, because this will
-			 * close quick outline dialog as well, so editor will get focus back
-			 */
-			editor.openSelectedTreeItemInEditor(selection, false);
-		}else{
-			outlinePage.setSelection(selection);
-		}
-		
-	}
+    @Override
+    protected void openSelectionImpl(ISelection selection, String filterText) {
+        if (editor == null) {
+            return;
+        }
+        HighspeedJSONEditorContentOutlinePage outlinePage = editor.getOutlinePage();
+        boolean outlineAvailable = outlinePageVisible(outlinePage);
+        if (outlineAvailable) {
+            /*
+             * select part in editor - grab focus not necessary, because this will close
+             * quick outline dialog as well, so editor will get focus back
+             */
+            editor.openSelectedTreeItemInEditor(selection, false);
+        } else {
+            outlinePage.setSelection(selection);
+        }
 
-	protected boolean outlinePageVisible(HighspeedJSONEditorContentOutlinePage outlinePage) {
-		Control control = outlinePage.getControl();
-		/* when control is not available - means outline view is not visible, */
-		boolean controlAvailable = control==null || control.isDisposed() || ! control.isVisible();
-		return controlAvailable;
-	}
+    }
 
-	@Override
-	protected AbstractUIPlugin getUIPlugin() {
-		HighspeedJSONEditorActivator editorActivator = HighspeedJSONEditorActivator.getDefault();
-		return editorActivator;
-	}
+    protected boolean outlinePageVisible(HighspeedJSONEditorContentOutlinePage outlinePage) {
+        Control control = outlinePage.getControl();
+        /* when control is not available - means outline view is not visible, */
+        boolean controlAvailable = control == null || control.isDisposed() || !control.isVisible();
+        return controlAvailable;
+    }
 
-	@Override
-	protected Item getInitialSelectedItem() {
-		if (editor == null) {
-			return null;
-		}
-		Item item = editor.getItemAtCarretPosition();
-		return item;
-	}
+    @Override
+    protected AbstractUIPlugin getUIPlugin() {
+        HighspeedJSONEditorActivator editorActivator = HighspeedJSONEditorActivator.getDefault();
+        return editorActivator;
+    }
 
-	@Override
-	protected FilterPatternMatcher<Item> createItemMatcher() {
-		return new ItemTextMatcher();
-	}
+    @Override
+    protected Item getInitialSelectedItem() {
+        if (editor == null) {
+            return null;
+        }
+        Item item = editor.getItemAtCarretPosition();
+        return item;
+    }
 
-	@Override
-	protected IBaseLabelProvider createLabelProvider() {
-		HighspeedJSONEditorOutlineLabelProvider labelProvider = new HighspeedJSONEditorOutlineLabelProvider();
-		return new DelegatingStyledCellLabelProvider(labelProvider);
-	}
+    @Override
+    protected FilterPatternMatcher<Item> createItemMatcher() {
+        return new ItemTextMatcher();
+    }
 
-	@Override
-	protected AbstractTreeViewerFilter<Item> createFilter() {
-		return new ItemTextViewerFilter();
-	}
+    @Override
+    protected IBaseLabelProvider createLabelProvider() {
+        HighspeedJSONEditorOutlineLabelProvider labelProvider = new HighspeedJSONEditorOutlineLabelProvider();
+        return new DelegatingStyledCellLabelProvider(labelProvider);
+    }
+
+    @Override
+    protected AbstractTreeViewerFilter<Item> createFilter() {
+        return new ItemTextViewerFilter();
+    }
 
 }

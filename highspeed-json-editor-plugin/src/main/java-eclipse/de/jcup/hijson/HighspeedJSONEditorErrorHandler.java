@@ -13,23 +13,22 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson;
+package de.jcup.hijson;
 
+public class HighspeedJSONEditorErrorHandler {
 
-public class HighspeedJSONEditorErrorHandler{
+    public static HighspeedJSONEditorErrorHandler INSTANCE = new HighspeedJSONEditorErrorHandler();
 
-	public static HighspeedJSONEditorErrorHandler INSTANCE = new HighspeedJSONEditorErrorHandler();
-	
-	HighspeedJSONEditorErrorHandler(){
-		
-	}
-	
-	public void handleError(String message, Throwable t) {
-		HighspeedJSONEditorUtil.logError(message, t);
-	}
+    HighspeedJSONEditorErrorHandler() {
 
-	public void handleError(String message) {
-		HighspeedJSONEditorUtil.logError(message, null);		
-	}
+    }
+
+    public void handleError(String message, Throwable t) {
+        HighspeedJSONEditorUtil.logError(message, t);
+    }
+
+    public void handleError(String message) {
+        HighspeedJSONEditorUtil.logError(message, null);
+    }
 
 }

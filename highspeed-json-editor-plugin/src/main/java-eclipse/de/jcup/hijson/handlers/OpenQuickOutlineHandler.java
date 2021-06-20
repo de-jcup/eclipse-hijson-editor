@@ -13,19 +13,18 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.handlers;
+package de.jcup.hijson.handlers;
 
 import de.jcup.hijson.HighspeedJSONEditor;
 
 public class OpenQuickOutlineHandler extends AbstractHighspeedJSONEditorHandler {
 
-	public static final String COMMAND_ID = "jsoneditor.editor.commands.quickoutline";
+    public static final String COMMAND_ID = "jsoneditor.editor.commands.quickoutline";
 
-	@Override
-	protected void executeOnHighspeedJSONEditor(HighspeedJSONEditor jsonEditor) {
-		jsonEditor.openQuickOutline();
-		
-	}
-	
+    @Override
+    protected void executeOnHighspeedJSONEditor(HighspeedJSONEditor jsonEditor) {
+        jsonEditor.openQuickOutline();
+
+    }
 
 }

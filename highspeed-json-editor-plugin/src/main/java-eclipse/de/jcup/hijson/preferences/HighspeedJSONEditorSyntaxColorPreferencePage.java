@@ -36,51 +36,49 @@ import de.jcup.hijson.HighspeedJSONEditorUtil;
 
 public class HighspeedJSONEditorSyntaxColorPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
-	public HighspeedJSONEditorSyntaxColorPreferencePage() {
-		setPreferenceStore(HighspeedJSONEditorUtil.getPreferences().getPreferenceStore());
-	}
-	
-	@Override
-	public void init(IWorkbench workbench) {
-		
-	}
+    public HighspeedJSONEditorSyntaxColorPreferencePage() {
+        setPreferenceStore(HighspeedJSONEditorUtil.getPreferences().getPreferenceStore());
+    }
 
-	@Override
-	protected void createFieldEditors() {
-		Composite parent = getFieldEditorParent();
-		Map<HighspeedJSONEditorSyntaxColorPreferenceConstants, ColorFieldEditor> editorMap = new HashMap<HighspeedJSONEditorSyntaxColorPreferenceConstants, ColorFieldEditor>();
-		for (HighspeedJSONEditorSyntaxColorPreferenceConstants colorIdentifier: HighspeedJSONEditorSyntaxColorPreferenceConstants.values()){
-			ColorFieldEditor editor = new ColorFieldEditor(colorIdentifier.getId(), colorIdentifier.getLabelText(), parent);
-			editorMap.put(colorIdentifier, editor);
-			addField(editor);
-		}
-		Button restoreDarkThemeColorsButton= new Button(parent,  SWT.PUSH);
-		restoreDarkThemeColorsButton.setText("Restore Defaults for Dark Theme");
-		restoreDarkThemeColorsButton.setToolTipText("Same as 'Restore Defaults' but for dark themes.\n Editor makes just a suggestion, you still have to apply or cancel the settings.");
-		restoreDarkThemeColorsButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
+    @Override
+    public void init(IWorkbench workbench) {
 
-				/* editor colors */
-				changeColor(editorMap, COLOR_NORMAL_TEXT, HighspeedJSONEditorColorConstants.GRAY_JAVA);
-				
-				changeColor(editorMap, COLOR_STRING, HighspeedJSONEditorColorConstants.MIDDLE_ORANGE);
-				changeColor(editorMap, COLOR_COMMENT, HighspeedJSONEditorColorConstants.GREEN_JAVA);
-				changeColor(editorMap, COLOR_NULL, HighspeedJSONEditorColorConstants.BRIGHT_CYAN);
+    }
 
-				changeColor(editorMap, COLOR_KEY, HighspeedJSONEditorColorConstants.DARK_THEME_LIGHT_BLUE);
-				changeColor(editorMap, COLOR_BOOLEAN, HighspeedJSONEditorColorConstants.DARK_THEME_LIGHT_ORANGE);
-				
-			}
+    @Override
+    protected void createFieldEditors() {
+        Composite parent = getFieldEditorParent();
+        Map<HighspeedJSONEditorSyntaxColorPreferenceConstants, ColorFieldEditor> editorMap = new HashMap<HighspeedJSONEditorSyntaxColorPreferenceConstants, ColorFieldEditor>();
+        for (HighspeedJSONEditorSyntaxColorPreferenceConstants colorIdentifier : HighspeedJSONEditorSyntaxColorPreferenceConstants.values()) {
+            ColorFieldEditor editor = new ColorFieldEditor(colorIdentifier.getId(), colorIdentifier.getLabelText(), parent);
+            editorMap.put(colorIdentifier, editor);
+            addField(editor);
+        }
+        Button restoreDarkThemeColorsButton = new Button(parent, SWT.PUSH);
+        restoreDarkThemeColorsButton.setText("Restore Defaults for Dark Theme");
+        restoreDarkThemeColorsButton.setToolTipText("Same as 'Restore Defaults' but for dark themes.\n Editor makes just a suggestion, you still have to apply or cancel the settings.");
+        restoreDarkThemeColorsButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
 
-			private void changeColor(Map<HighspeedJSONEditorSyntaxColorPreferenceConstants, ColorFieldEditor> editorMap,
-					HighspeedJSONEditorSyntaxColorPreferenceConstants colorId, RGB rgb) {
-				editorMap.get(colorId).getColorSelector().setColorValue(rgb);
-			}
-			
-		});
-			
-		
-	}
-	
+                /* editor colors */
+                changeColor(editorMap, COLOR_NORMAL_TEXT, HighspeedJSONEditorColorConstants.GRAY_JAVA);
+
+                changeColor(editorMap, COLOR_STRING, HighspeedJSONEditorColorConstants.MIDDLE_ORANGE);
+                changeColor(editorMap, COLOR_COMMENT, HighspeedJSONEditorColorConstants.GREEN_JAVA);
+                changeColor(editorMap, COLOR_NULL, HighspeedJSONEditorColorConstants.BRIGHT_CYAN);
+
+                changeColor(editorMap, COLOR_KEY, HighspeedJSONEditorColorConstants.DARK_THEME_LIGHT_BLUE);
+                changeColor(editorMap, COLOR_BOOLEAN, HighspeedJSONEditorColorConstants.DARK_THEME_LIGHT_ORANGE);
+
+            }
+
+            private void changeColor(Map<HighspeedJSONEditorSyntaxColorPreferenceConstants, ColorFieldEditor> editorMap, HighspeedJSONEditorSyntaxColorPreferenceConstants colorId, RGB rgb) {
+                editorMap.get(colorId).getColorSelector().setColorValue(rgb);
+            }
+
+        });
+
+    }
+
 }

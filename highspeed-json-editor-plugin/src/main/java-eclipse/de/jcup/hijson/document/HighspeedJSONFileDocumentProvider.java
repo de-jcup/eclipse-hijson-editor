@@ -23,27 +23,28 @@ import de.jcup.hijson.HighspeedJSONEditor;
 
 /**
  * Document provider for files inside workspace
+ * 
  * @author albert
  *
  */
 public class HighspeedJSONFileDocumentProvider extends FileDocumentProvider {
-    
+
     private HighspeedJSONEditor editor;
 
-    public HighspeedJSONFileDocumentProvider(HighspeedJSONEditor editor){
-        this.editor=editor;
+    public HighspeedJSONFileDocumentProvider(HighspeedJSONEditor editor) {
+        this.editor = editor;
     }
-	
-	@Override
-	protected IDocument createDocument(Object element) throws CoreException {
-		IDocument document = super.createDocument(element);
-		HighspeedJSONPartitionerAndAutoFormatSupport.DEFAULT.setPartitionerAndFormatIfNecessary(editor, document);
-		return document;
-	}
-	
-	@Override
-	protected IDocument createEmptyDocument() {
-	    return new HighspeedJSONDocument(editor);
-	}
-	
+
+    @Override
+    protected IDocument createDocument(Object element) throws CoreException {
+        IDocument document = super.createDocument(element);
+        HighspeedJSONPartitionerAndAutoFormatSupport.DEFAULT.setPartitionerAndFormatIfNecessary(editor, document);
+        return document;
+    }
+
+    @Override
+    protected IDocument createEmptyDocument() {
+        return new HighspeedJSONDocument(editor);
+    }
+
 }

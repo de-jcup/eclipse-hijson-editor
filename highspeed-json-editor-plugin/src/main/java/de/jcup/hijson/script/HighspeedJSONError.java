@@ -22,6 +22,6 @@ public class HighspeedJSONError {
     public int column;
 
     public int line;
-    
+
     public long offset;
 }

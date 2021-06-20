@@ -29,89 +29,86 @@ import org.eclipse.swt.events.KeyEvent;
 
 class HighspeedJSONBracketInsertionCompleter extends KeyAdapter {
 
-	private final HighspeedJSONEditor jsonEditor;
+    private final HighspeedJSONEditor jsonEditor;
 
-	/**
-	 * @param jsonEditor
-	 */
-	HighspeedJSONBracketInsertionCompleter(HighspeedJSONEditor jsonEditor) {
-		this.jsonEditor = jsonEditor;
-	}
+    /**
+     * @param jsonEditor
+     */
+    HighspeedJSONBracketInsertionCompleter(HighspeedJSONEditor jsonEditor) {
+        this.jsonEditor = jsonEditor;
+    }
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		InsertClosingBracketsSupport insertClosingBracketsSupport = getInsertionSupport(e);
-		if (insertClosingBracketsSupport == null) {
-			return;
-		}
-		/*
-		 * do not use last caret start - because the listener ordering could be
-		 * different
-		 */
-		ISelectionProvider selectionProvider = this.jsonEditor.getSelectionProvider();
-		if (selectionProvider == null) {
-			return;
-		}
-		ISelection selection = selectionProvider.getSelection();
-		if (!(selection instanceof ITextSelection)) {
-			return;
-		}
-		boolean enabled = getPreferences().getBooleanPreference(P_EDITOR_AUTO_CREATE_END_BRACKETSY);
-		if (!enabled) {
-			return;
-		}
-		ITextSelection textSelection = (ITextSelection) selection;
-		int offset = textSelection.getOffset();
+    @Override
+    public void keyReleased(KeyEvent e) {
+        InsertClosingBracketsSupport insertClosingBracketsSupport = getInsertionSupport(e);
+        if (insertClosingBracketsSupport == null) {
+            return;
+        }
+        /*
+         * do not use last caret start - because the listener ordering could be
+         * different
+         */
+        ISelectionProvider selectionProvider = this.jsonEditor.getSelectionProvider();
+        if (selectionProvider == null) {
+            return;
+        }
+        ISelection selection = selectionProvider.getSelection();
+        if (!(selection instanceof ITextSelection)) {
+            return;
+        }
+        boolean enabled = getPreferences().getBooleanPreference(P_EDITOR_AUTO_CREATE_END_BRACKETSY);
+        if (!enabled) {
+            return;
+        }
+        ITextSelection textSelection = (ITextSelection) selection;
+        int offset = textSelection.getOffset();
 
-		try {
-			IDocument document = this.jsonEditor.getDocument();
-			if (document == null) {
-				return;
-			}
-			insertClosingBracketsSupport.insertClosingBrackets(document, selectionProvider, offset);
-		} catch (BadLocationException e1) {
-			/* ignore */
-			return;
-		}
+        try {
+            IDocument document = this.jsonEditor.getDocument();
+            if (document == null) {
+                return;
+            }
+            insertClosingBracketsSupport.insertClosingBrackets(document, selectionProvider, offset);
+        } catch (BadLocationException e1) {
+            /* ignore */
+            return;
+        }
 
-	}
+    }
 
-	protected InsertClosingBracketsSupport getInsertionSupport(KeyEvent e) {
-		if (e.character == '[') {
-			return new EdgeBracketInsertionSupport();
-		}
-		if (e.character == '{') {
-			return new CurlyBracketInsertionSupport();
-		}
-		return null;
-	}
+    protected InsertClosingBracketsSupport getInsertionSupport(KeyEvent e) {
+        if (e.character == '[') {
+            return new EdgeBracketInsertionSupport();
+        }
+        if (e.character == '{') {
+            return new CurlyBracketInsertionSupport();
+        }
+        return null;
+    }
 
-	private abstract class InsertClosingBracketsSupport {
-		protected abstract void insertClosingBrackets(IDocument document, ISelectionProvider selectionProvider, int offset)
-				throws BadLocationException;
-	}
+    private abstract class InsertClosingBracketsSupport {
+        protected abstract void insertClosingBrackets(IDocument document, ISelectionProvider selectionProvider, int offset) throws BadLocationException;
+    }
 
-	private class EdgeBracketInsertionSupport extends InsertClosingBracketsSupport {
+    private class EdgeBracketInsertionSupport extends InsertClosingBracketsSupport {
 
-		@Override
-		protected void insertClosingBrackets(IDocument document, ISelectionProvider selectionProvider, int offset)
-				throws BadLocationException {
-			document.replace(offset - 1, 1, "[ ]");
-			selectionProvider.setSelection(new TextSelection(offset + 1, 0));
+        @Override
+        protected void insertClosingBrackets(IDocument document, ISelectionProvider selectionProvider, int offset) throws BadLocationException {
+            document.replace(offset - 1, 1, "[ ]");
+            selectionProvider.setSelection(new TextSelection(offset + 1, 0));
 
-		}
+        }
 
-	}
-	
-	private class CurlyBracketInsertionSupport extends InsertClosingBracketsSupport {
+    }
 
-		@Override
-		protected void insertClosingBrackets(IDocument document, ISelectionProvider selectionProvider, int offset)
-				throws BadLocationException {
-			document.replace(offset - 1, 1, "{ }");
-			selectionProvider.setSelection(new TextSelection(offset + 1, 0));
+    private class CurlyBracketInsertionSupport extends InsertClosingBracketsSupport {
 
-		}
+        @Override
+        protected void insertClosingBrackets(IDocument document, ISelectionProvider selectionProvider, int offset) throws BadLocationException {
+            document.replace(offset - 1, 1, "{ }");
+            selectionProvider.setSelection(new TextSelection(offset + 1, 0));
 
-	}
+        }
+
+    }
 }

@@ -23,46 +23,45 @@ import org.osgi.framework.BundleContext;
  */
 public class HighspeedJSONEditorActivator extends AbstractUIPlugin {
 
-	// The plug-in COMMAND_ID
-	public static final String PLUGIN_ID = "de.jcup.hijson"; //$NON-NLS-1$
+    // The plug-in COMMAND_ID
+    public static final String PLUGIN_ID = "de.jcup.hijson"; //$NON-NLS-1$
 
-	// The shared instance
-	private static HighspeedJSONEditorActivator plugin;
-	private ColorManager colorManager;
+    // The shared instance
+    private static HighspeedJSONEditorActivator plugin;
+    private ColorManager colorManager;
 
+    /**
+     * The constructor
+     */
+    public HighspeedJSONEditorActivator() {
+        colorManager = new ColorManager();
+    }
 
-	/**
-	 * The constructor
-	 */
-	public HighspeedJSONEditorActivator() {
-		colorManager = new ColorManager();
-	}
+    public ColorManager getColorManager() {
+        return colorManager;
+    }
 
-	public ColorManager getColorManager() {
-		return colorManager;
-	}
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
 
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-		
-		HighspeedJSONEditorUtil.refreshParserSettings();
-		
-	}
+        HighspeedJSONEditorUtil.refreshParserSettings();
 
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		colorManager.dispose();
-		super.stop(context);
-	}
+    }
 
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static HighspeedJSONEditorActivator getDefault() {
-		return plugin;
-	}
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        colorManager.dispose();
+        super.stop(context);
+    }
+
+    /**
+     * Returns the shared instance
+     *
+     * @return the shared instance
+     */
+    public static HighspeedJSONEditorActivator getDefault() {
+        return plugin;
+    }
 
 }

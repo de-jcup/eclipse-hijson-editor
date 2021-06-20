@@ -13,10 +13,10 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson.preferences;
+package de.jcup.hijson.preferences;
 
 public interface PreferenceIdentifiable {
-	
-	public String getId();
+
+    public String getId();
 
 }

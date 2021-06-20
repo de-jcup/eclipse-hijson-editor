@@ -14,8 +14,6 @@ package de.jcup.hijson.preferences;
  * and limitations under the License.
  *
  */
- 
-
 
 import static de.jcup.hijson.HighspeedJSONEditorColorConstants.*;
 import static de.jcup.hijson.HighspeedJSONEditorUtil.*;
@@ -32,30 +30,29 @@ import de.jcup.hijson.HighspeedJSONEditorColorConstants;
  */
 public class HighspeedJSONEditorPreferenceInitializer extends AbstractPreferenceInitializer {
 
-	public void initializeDefaultPreferences() {
-		HighspeedJSONEditorPreferences preferences = getPreferences();
-		IPreferenceStore store = preferences.getPreferenceStore();
-		
-		/* Outline */
-		store.setDefault(P_LINK_EDITOR_WITH_OUTLINE.getId(), true);
-		store.setDefault(P_CREATE_OUTLINE_FOR_NEW_EDITOR.getId(), true); 
-		store.setDefault(P_CREATE_GROUPED_ARRAYS_TRESHOLD.getId(), 100); 
-		
-		/* PARSING */
-		store.setDefault(P_EDITOR_ALLOW_COMMENTS_ENABLED.getId(), true);
-		store.setDefault(P_EDITOR_ALLOW_UNQUOTED_CONTROL_CHARS.getId(), false);
-		/* VALIDATION*/
-		store.setDefault(P_VALIDATE_ON_SAVE.getId(), true);
-		
-		/* ++++++++++++ */
-		/* + Brackets + */
-		/* ++++++++++++ */
-		/* bracket rendering configuration */
-		store.setDefault(P_EDITOR_MATCHING_BRACKETS_ENABLED.getId(), true); // per default matching is enabled, but without the two other special parts
-		store.setDefault(P_EDITOR_HIGHLIGHT_BRACKET_AT_CARET_LOCATION.getId(), false);
-		store.setDefault(P_EDITOR_ENCLOSING_BRACKETS.getId(), false);
-		store.setDefault(P_EDITOR_AUTO_CREATE_END_BRACKETSY.getId(), true);
-		
+    public void initializeDefaultPreferences() {
+        HighspeedJSONEditorPreferences preferences = getPreferences();
+        IPreferenceStore store = preferences.getPreferenceStore();
+
+        /* Outline */
+        store.setDefault(P_LINK_EDITOR_WITH_OUTLINE.getId(), true);
+        store.setDefault(P_CREATE_OUTLINE_FOR_NEW_EDITOR.getId(), true);
+        store.setDefault(P_CREATE_GROUPED_ARRAYS_TRESHOLD.getId(), 100);
+
+        /* PARSING */
+        store.setDefault(P_EDITOR_ALLOW_COMMENTS_ENABLED.getId(), true);
+        store.setDefault(P_EDITOR_ALLOW_UNQUOTED_CONTROL_CHARS.getId(), false);
+        /* VALIDATION */
+        store.setDefault(P_VALIDATE_ON_SAVE.getId(), true);
+
+        /* ++++++++++++ */
+        /* + Brackets + */
+        /* ++++++++++++ */
+        /* bracket rendering configuration */
+        store.setDefault(P_EDITOR_MATCHING_BRACKETS_ENABLED.getId(), true); // per default matching is enabled, but without the two other special parts
+        store.setDefault(P_EDITOR_HIGHLIGHT_BRACKET_AT_CARET_LOCATION.getId(), false);
+        store.setDefault(P_EDITOR_ENCLOSING_BRACKETS.getId(), false);
+        store.setDefault(P_EDITOR_AUTO_CREATE_END_BRACKETSY.getId(), true);
 
         /* +++++++++++++++++ */
         /* + Editor Colors + */
@@ -67,18 +64,16 @@ public class HighspeedJSONEditorPreferenceInitializer extends AbstractPreference
 
         preferences.setDefaultColor(COLOR_KEY, HighspeedJSONEditorColorConstants.KEYWORD_DEFAULT_PURPLE);
         preferences.setDefaultColor(COLOR_BOOLEAN, DARK_GREEN);
-		
-		/* bracket color */
-		preferences.setDefaultColor(P_EDITOR_MATCHING_BRACKETS_COLOR, GRAY_JAVA);
-		
-		/* +++++++++++++++++++ */
-		/* + Code Assistence + */
-		/* +++++++++++++++++++ */
-		store.setDefault(P_CODE_ASSIST_ADD_KEYWORDS.getId(), true);
-		store.setDefault(P_CODE_ASSIST_ADD_SIMPLEWORDS.getId(), true);
-		
-	}
-	
-	
-	
+
+        /* bracket color */
+        preferences.setDefaultColor(P_EDITOR_MATCHING_BRACKETS_COLOR, GRAY_JAVA);
+
+        /* +++++++++++++++++++ */
+        /* + Code Assistence + */
+        /* +++++++++++++++++++ */
+        store.setDefault(P_CODE_ASSIST_ADD_KEYWORDS.getId(), true);
+        store.setDefault(P_CODE_ASSIST_ADD_SIMPLEWORDS.getId(), true);
+
+    }
+
 }

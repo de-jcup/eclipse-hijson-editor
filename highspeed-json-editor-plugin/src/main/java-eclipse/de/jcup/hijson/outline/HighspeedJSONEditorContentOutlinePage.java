@@ -36,7 +36,6 @@ import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import de.jcup.hijson.EclipseUtil;
 import de.jcup.hijson.HighspeedJSONEditor;
 import de.jcup.hijson.HighspeedJSONEditorActivator;
-import de.jcup.hijson.outline.Item;
 import de.jcup.hijson.script.HighspeedJSONModel;
 
 public class HighspeedJSONEditorContentOutlinePage extends ContentOutlinePage implements IDoubleClickListener {

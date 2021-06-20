@@ -29,27 +29,27 @@ import de.jcup.hijson.HighspeedJSONEditor;
  */
 public class HighspeedJSONTextFileDocumentProvider extends TextFileDocumentProvider {
 
-	private HighspeedJSONEditor editor;
+    private HighspeedJSONEditor editor;
 
     public HighspeedJSONTextFileDocumentProvider(HighspeedJSONEditor editor) {
-        this.editor=editor;
+        this.editor = editor;
     }
 
     @Override
-	public IDocument getDocument(Object element) {
-		IDocument document = super.getDocument(element);
-		if (document == null) {
-			return null;
-		}
-		IDocumentPartitioner formerPartitioner = document.getDocumentPartitioner();
-		if (formerPartitioner instanceof HighspeedJSONPartitioner || formerPartitioner instanceof FallbackHighspeedJSONPartitioner) {
-			return document;
-		}
-		
-		/* installation necessary */
+    public IDocument getDocument(Object element) {
+        IDocument document = super.getDocument(element);
+        if (document == null) {
+            return null;
+        }
+        IDocumentPartitioner formerPartitioner = document.getDocumentPartitioner();
+        if (formerPartitioner instanceof HighspeedJSONPartitioner || formerPartitioner instanceof FallbackHighspeedJSONPartitioner) {
+            return document;
+        }
+
+        /* installation necessary */
 //		HighspeedJSONPartitionerAndAutoFormatSupport.DEFAULT.setPartitionerAndFormatIfNecessary(editor, document);
-		
-		return document;
-	}
+
+        return document;
+    }
 
 }

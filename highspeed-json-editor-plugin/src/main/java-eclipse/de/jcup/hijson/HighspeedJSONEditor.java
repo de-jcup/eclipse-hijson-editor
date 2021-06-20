@@ -154,7 +154,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
 
     private HighspeedJSONModel buildModelWithoutValidation() {
         String text = getDocumentText();
-        HighspeedJSONModel model = modelBuilder.build(text, true);
+        HighspeedJSONModel model = modelBuilder.build(text, getGroupdArraysTreshold(), true);
         return model;
     }
 
@@ -391,6 +391,10 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
         rebuildOutlineAndOrValidate();
     }
 
+    private int getGroupdArraysTreshold() {
+        return HighspeedJSONEditorPreferences.getInstance().getGroupdArraysTreshold();
+    }
+
     /**
      * Does rebuild the outline - this is done asynchronous
      */
@@ -411,7 +415,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
                 HighspeedJSONModel model = null;
 
                 if (outlineBuildEnabled || validateOnSaveEnabled) {
-                    model = modelBuilder.build(text);
+                    model = modelBuilder.build(text, getGroupdArraysTreshold());
                     validateJSON();
                 }
 

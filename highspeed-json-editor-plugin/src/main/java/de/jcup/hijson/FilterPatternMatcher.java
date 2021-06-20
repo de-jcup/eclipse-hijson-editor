@@ -13,13 +13,12 @@
  * and limitations under the License.
  *
  */
- package de.jcup.hijson;
+package de.jcup.hijson;
 
+public interface FilterPatternMatcher<T> extends Matcher<T> {
 
-public interface FilterPatternMatcher<T> extends Matcher<T>{
+    void setFilterText(String filterText);
 
-	void setFilterText(String filterText);
-
-	boolean hasFilterPattern();
+    boolean hasFilterPattern();
 
 }

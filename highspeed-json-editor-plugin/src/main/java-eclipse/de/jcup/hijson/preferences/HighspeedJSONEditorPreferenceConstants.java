@@ -15,40 +15,31 @@ package de.jcup.hijson.preferences;
  * and limitations under the License.
  *
  */
- 
 
 /**
  * Constant definitions for plug-in preferences
  */
-public enum HighspeedJSONEditorPreferenceConstants implements PreferenceIdentifiable{
+public enum HighspeedJSONEditorPreferenceConstants implements PreferenceIdentifiable {
 
-	
-	P_EDITOR_MATCHING_BRACKETS_ENABLED("matchingBrackets"),
-	P_EDITOR_ALLOW_COMMENTS_ENABLED("allowComments"),
-	P_EDITOR_ALLOW_UNQUOTED_CONTROL_CHARS("allowUnquotedControlChars"),
-	P_EDITOR_HIGHLIGHT_BRACKET_AT_CARET_LOCATION("highlightBracketAtCaretLocation"),
-	P_EDITOR_ENCLOSING_BRACKETS("enclosingBrackets"),
-	P_EDITOR_MATCHING_BRACKETS_COLOR("matchingBracketsColor"),
-	P_EDITOR_AUTO_CREATE_END_BRACKETSY("autoCreateEndBrackets"),
-	
-	P_LINK_EDITOR_WITH_OUTLINE("linkEditorWithOutline"),
-	P_CREATE_OUTLINE_FOR_NEW_EDITOR("createOutlineForEditor"),
-	P_CREATE_GROUPED_ARRAYS_TRESHOLD("createGroupedArraysTreshold"),
-	
-	P_VALIDATE_ON_SAVE("validateOnSaveEnabled"),
-	
-	P_CODE_ASSIST_ADD_KEYWORDS("codeAssistAddsKeyWords"),
-	P_CODE_ASSIST_ADD_SIMPLEWORDS("codeAssistAddsSimpleWords"),
-	
-	;
+    P_EDITOR_MATCHING_BRACKETS_ENABLED("matchingBrackets"), P_EDITOR_ALLOW_COMMENTS_ENABLED("allowComments"), P_EDITOR_ALLOW_UNQUOTED_CONTROL_CHARS("allowUnquotedControlChars"),
+    P_EDITOR_HIGHLIGHT_BRACKET_AT_CARET_LOCATION("highlightBracketAtCaretLocation"), P_EDITOR_ENCLOSING_BRACKETS("enclosingBrackets"), P_EDITOR_MATCHING_BRACKETS_COLOR("matchingBracketsColor"),
+    P_EDITOR_AUTO_CREATE_END_BRACKETSY("autoCreateEndBrackets"),
 
-	private String id;
+    P_LINK_EDITOR_WITH_OUTLINE("linkEditorWithOutline"), P_CREATE_OUTLINE_FOR_NEW_EDITOR("createOutlineForEditor"), P_CREATE_GROUPED_ARRAYS_TRESHOLD("createGroupedArraysTreshold"),
 
-	private HighspeedJSONEditorPreferenceConstants(String id) {
-		this.id = id;
-	}
+    P_VALIDATE_ON_SAVE("validateOnSaveEnabled"),
 
-	public String getId() {
-		return id;
-	}
+    P_CODE_ASSIST_ADD_KEYWORDS("codeAssistAddsKeyWords"), P_CODE_ASSIST_ADD_SIMPLEWORDS("codeAssistAddsSimpleWords"),
+
+    ;
+
+    private String id;
+
+    private HighspeedJSONEditorPreferenceConstants(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
 }
