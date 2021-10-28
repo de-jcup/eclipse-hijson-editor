@@ -71,14 +71,14 @@ import de.jcup.hijson.document.HighspeedJSONTextFileDocumentProvider;
 import de.jcup.hijson.document.JSONFormatSupport;
 import de.jcup.hijson.document.JSONFormatSupport.FormatterResult;
 import de.jcup.hijson.outline.HighspeedJSONEditorContentOutlinePage;
-import de.jcup.hijson.outline.HighspeedJSONEditorTreeContentProvider2;
+import de.jcup.hijson.outline.HighspeedJSONEditorTreeContentProvider;
 import de.jcup.hijson.outline.HighspeedJSONQuickOutlineDialog;
 import de.jcup.hijson.outline.Item;
 import de.jcup.hijson.preferences.HighspeedJSONEditorPreferences;
 import de.jcup.hijson.script.HighSpeedJSONModelBuilder;
 import de.jcup.hijson.script.HighspeedJSONError;
 import de.jcup.hijson.script.HighspeedJSONModel;
-import de.jcup.hijson.script.HighspeedJSONModelBuilder2;
+import de.jcup.hijson.script.DefaultHighspeedJSONModelBuilder;
 
 public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupport, IResourceChangeListener {
 
@@ -100,7 +100,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
     private int lastCaretPosition;
 
     public HighspeedJSONEditor() {
-        this.modelBuilder = new HighspeedJSONModelBuilder2();
+        this.modelBuilder = DefaultHighspeedJSONModelBuilder.INSTANCE; // we use a shared build instance between editors (reduces memory foot print)
     }
 
     public void resourceChanged(IResourceChangeEvent event) {
@@ -142,7 +142,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
             quickOutlineOpened = true;
         }
         Shell shell = getEditorSite().getShell();
-        HighspeedJSONModel model = buildModelWithoutValidation();
+        HighspeedJSONModel model = buildOutlineModelWithoutValidation();
         HighspeedJSONQuickOutlineDialog dialog = new HighspeedJSONQuickOutlineDialog(this, shell, "Quick outline");
         dialog.setInput(model);
 
@@ -152,7 +152,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
         }
     }
 
-    private HighspeedJSONModel buildModelWithoutValidation() {
+    private HighspeedJSONModel buildOutlineModelWithoutValidation() {
         String text = getDocumentText();
         HighspeedJSONModel model = modelBuilder.build(text, getGroupdArraysTreshold(), true);
         return model;
@@ -186,7 +186,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
         return IMarker.SEVERITY_INFO;
     }
 
-    private void addErrorMarkers(HighspeedJSONModel model) {
+    protected void addErrorMarkers(HighspeedJSONModel model) {
         if (model == null) {
             return;
         }
@@ -347,7 +347,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
         if (StatusMessageSupport.class.equals(adapter)) {
             return (T) this;
         }
-        if (ITreeContentProvider.class.equals(adapter) || HighspeedJSONEditorTreeContentProvider2.class.equals(adapter)) {
+        if (ITreeContentProvider.class.equals(adapter) || HighspeedJSONEditorTreeContentProvider.class.equals(adapter)) {
             if (outlinePage == null) {
                 return null;
             }
@@ -399,7 +399,6 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
      * Does rebuild the outline - this is done asynchronous
      */
     public void rebuildOutlineAndOrValidate() {
-        String text = getDocumentText();
 
         Runnable r = new Runnable() {
 
@@ -412,25 +411,20 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
                 boolean outlineBuildEnabled = page.isOutlineBuildEnabled();
                 boolean validateOnSaveEnabled = HighspeedJSONEditorPreferences.getInstance().isValidateOnSaveEnabled();
 
-                HighspeedJSONModel model = null;
-
-                if (outlineBuildEnabled || validateOnSaveEnabled) {
-                    model = modelBuilder.build(text, getGroupdArraysTreshold());
+                if (validateOnSaveEnabled) {
                     validateJSON();
                 }
 
-                if (model == null) {
-                    model = FALLBACK_EMPTY_MODEL;
+                if (!outlineBuildEnabled) {
+                    page.rebuild(FALLBACK_EMPTY_MODEL); // reset tree
+                    return;
+                }
+                HighspeedJSONModel outlineJSONModel = buildOutlineModelWithoutValidation();
+                if (outlineJSONModel == null) {
+                    outlineJSONModel = FALLBACK_EMPTY_MODEL;
                 }
 
-                if (outlineBuildEnabled) {
-                    page.rebuild(model);
-                } else {
-                    page.rebuild(FALLBACK_EMPTY_MODEL); // reset tree
-                }
-                if (validateOnSaveEnabled && model.hasErrors()) {
-                    addErrorMarkers(model);
-                }
+                page.rebuild(outlineJSONModel);
             }
         };
 
@@ -655,7 +649,7 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
         if (outlinePage == null) {
             return null;
         }
-        HighspeedJSONEditorTreeContentProvider2 contentProvider = outlinePage.getContentProvider();
+        HighspeedJSONEditorTreeContentProvider contentProvider = outlinePage.getContentProvider();
         if (contentProvider == null) {
             return null;
         }

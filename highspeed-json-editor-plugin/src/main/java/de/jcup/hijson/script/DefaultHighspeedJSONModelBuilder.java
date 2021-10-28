@@ -24,17 +24,26 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonLocation;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.core.json.JsonReadFeature;
 
 import de.jcup.hijson.outline.Item;
 import de.jcup.hijson.outline.ItemType;
 import de.jcup.hijson.outline.ItemVariant;
 
-public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
+public class DefaultHighspeedJSONModelBuilder implements HighSpeedJSONModelBuilder {
 
-    private JsonFactory factory = new JsonFactory();
+    private JsonFactory configuredJSONFactory = new JsonFactory();
+    private JsonFactory ignoreFailuresJSONFactory = new JsonFactory();
+    
+    public static final DefaultHighspeedJSONModelBuilder INSTANCE = new DefaultHighspeedJSONModelBuilder();
 
-    public HighspeedJSONModel build(String text, int tresholdGroupArrays) {
-        return build(text, tresholdGroupArrays, false);
+    private DefaultHighspeedJSONModelBuilder() {
+        /* configure ignore failures factory */
+        for (JsonReadFeature readFeature : JsonReadFeature.values()) {
+            if (readFeature.name().toUpperCase().startsWith("ALLOW")) {
+                ignoreFailuresJSONFactory.configure(readFeature.mappedFeature(), true);
+            }
+        }
     }
 
     private class JSONContext {
@@ -52,6 +61,13 @@ public class HighspeedJSONModelBuilder2 implements HighSpeedJSONModelBuilder {
         context.model = model;
         context.tresholdGroupArrays = tresholdGroupArrays;
         try {
+            JsonFactory factory = null;
+
+            if (ignoreFailures) {
+                factory = ignoreFailuresJSONFactory;
+            } else {
+                factory = configuredJSONFactory;
+            }
             context.parser = factory.createParser(json);
 
             while (!context.parser.isClosed()) {

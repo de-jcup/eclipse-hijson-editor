@@ -15,24 +15,12 @@
  */
 package de.jcup.hijson.outline;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.jface.viewers.ITreeContentProvider;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.ValueNode;
-
-import de.jcup.hijson.script.HighspeedJSONError;
 import de.jcup.hijson.script.HighspeedJSONModel;
 
-@Deprecated // use HighspeedJSONEditorTreeContentProvider2
 public class HighspeedJSONEditorTreeContentProvider implements ITreeContentProvider {
 
-    private static final String JSON_MODEL_CONTAINS_ERRORS = "JSON contains errors.";
     private static final String JSON_MODEL_EMPTY_OR_INVALID = "Empty JSON or invalid";
     private static final String JSON_MODEL_DISABLED = "Outline disabled - must be enabled by menu or toolbar";
     private static final Object[] RESULT_WHEN_EMPTY = new Object[] { JSON_MODEL_EMPTY_OR_INVALID };
@@ -40,6 +28,7 @@ public class HighspeedJSONEditorTreeContentProvider implements ITreeContentProvi
     private Object[] items;
     private Object monitor = new Object();
     boolean outlineEnabled;
+    private HighspeedJSONModel model;
 
     HighspeedJSONEditorTreeContentProvider() {
         items = RESULT_WHEN_EMPTY;
@@ -86,147 +75,43 @@ public class HighspeedJSONEditorTreeContentProvider implements ITreeContentProvi
 
     }
 
-    private Item[] createItems(HighspeedJSONModel model) {
-        List<Item> list = new ArrayList<>();
-        JsonNode rootNode = null;
-        if (model != null) {
-            rootNode = model.getRootNode();
-        }
-        if (rootNode == null || !outlineEnabled) {
-            Item item = new Item();
-            if (!outlineEnabled) {
-                item.name = JSON_MODEL_DISABLED;
-            } else {
-                item.name = JSON_MODEL_EMPTY_OR_INVALID;
-            }
-            item.type = ItemType.META_INFO;
-            item.offset = 0;
-            item.length = 0;
-            item.endOffset = 0;
-            item.variant = "Info";
-            list.add(item);
-        } else {
-            return new Item[] { createNodeItemAndChildren(rootNode, "root") };
-        }
-
-        if (model != null && model.hasErrors()) {
-            for (HighspeedJSONError error : model.getErrors()) {
-                Item item = new Item();
-                item.name = JSON_MODEL_CONTAINS_ERRORS;
-                item.type = ItemType.META_ERROR;
-                item.offset = (int) error.offset;
-                item.length = 1;
-                item.endOffset = item.offset + 1;
-                item.variant = "Error";
-                list.add(0, item);
-            }
-        }
-        return list.toArray(new Item[list.size()]);
-
-    }
-
-    private Item createNodeItemAndChildren(JsonNode node, String name) {
-        Item item = new Item();
-        item.name = name;
-        item.type = ItemType.JSON_NODE;
-        item.offset = 0; /*
-                          * FIXME albert: fix offset calculation - maybe choose jackson stream API
-                          * instead tree parse!
-                          */
-        item.length = 1;
-        item.endOffset = item.offset + 1;
-
-        if (node instanceof ArrayNode) {
-            ArrayNode an = (ArrayNode) node;
-            item.variant = "Array";
-            item.name = item.name + "(" + an.size() + ")";
-        } else if (node instanceof ObjectNode) {
-            item.variant = "Object";
-        } else if (node instanceof ValueNode) {
-            item.variant = "Value";
-        } else {
-            item.variant = node.getClass().getSimpleName();
-        }
-
-        if (node instanceof ObjectNode) {
-            ObjectNode cn = (ObjectNode) node;
-            item.children = new ArrayList<Item>();
-            for (Iterator<String> it = cn.fieldNames(); it.hasNext();) {
-                String childName = it.next();
-                JsonNode next = cn.get(childName);
-                Item child = createNodeItemAndChildren(next, childName);
-                item.children.add(child);
-                child.parent = item;
-            }
-        } else if (node instanceof ArrayNode) {
-            ArrayNode cn = (ArrayNode) node;
-            int index = 0;
-            item.children = new ArrayList<Item>();
-            int length = cn.size();
-            int pos = 0;
-            Item parent = item;
-            for (Iterator<JsonNode> it = cn.elements(); it.hasNext();) {
-                String childName = name + "[" + index + "]";
-                JsonNode next = it.next();
-                Item child = createNodeItemAndChildren(next, childName);
-
-                if (length > 100) {
-                    if (pos == 0) {
-                        parent = new Item();
-                        parent.children = new ArrayList<>();
-                        parent.variant = "segment";
-                        parent.name = "[" + index + "..";
-                        int remaining = length - index;
-                        if (remaining < 100) {
-                            parent.name += index + remaining;
-                        } else {
-                            parent.name += index + 100;
-                        }
-                        parent.name += "]";
-                        parent.type = ItemType.VIRTUAL_ARRAY_SEGMENT_NODE;
-
-                        item.children.add(parent);
-                        parent.parent = item;
-                    }
-                    pos++;
-                    if (pos > 100) {
-                        pos = 0;
-                    }
-                }
-                parent.children.add(child);
-                child.parent = parent;
-
-                index++;
-            }
-        }
-        return item;
-    }
-
     public void rebuildTree(HighspeedJSONModel model) {
         synchronized (monitor) {
-            items = createItems(model);
+            this.model = model;
+            Item rootItem = model != null ? model.getRootItem() : null;
+            Item item = null;
+
+            if (outlineEnabled && rootItem != null) {
+                item = rootItem;
+            } else {
+                item = new Item();
+                if (!outlineEnabled) {
+                    item.name = JSON_MODEL_DISABLED;
+                } else {
+                    item.name = JSON_MODEL_EMPTY_OR_INVALID;
+                }
+            }
+            items = new Item[] { item };
         }
     }
 
     public Item tryToFindByOffset(int offset) {
         synchronized (monitor) {
-            if (items == null) {
+            if (model == null) {
                 return null;
             }
-            for (Object oitem : items) {
-                if (!(oitem instanceof Item)) {
-                    continue;
-                }
-                Item item = (Item) oitem;
-                int itemStart = item.getOffset();
-                int itemEnd = item.getEndOffset();// old: itemStart+item.getLength();
-                if (offset >= itemStart && offset <= itemEnd) {
-                    return item;
-                }
+            if (model.hasErrors()) {
+                return null;
             }
+            Item item = null;
+            for (int i = 0; i < 50 && item == null; i++) {
+                int offset2 = offset + i;
+                item = model.getItemOffsetMap().get(offset2);
+
+            }
+            return item;
 
         }
-        return null;
     }
 
 }
