@@ -47,7 +47,7 @@ public class HighspeedJSONTextFileDocumentProvider extends TextFileDocumentProvi
         }
 
         /* installation necessary */
-//		HighspeedJSONPartitionerAndAutoFormatSupport.DEFAULT.setPartitionerAndFormatIfNecessary(editor, document);
+		HighspeedJSONPartitionerAndAutoFormatSupport.DEFAULT.setPartitionerAndFormatIfNecessary(editor, document);
 
         return document;
     }
