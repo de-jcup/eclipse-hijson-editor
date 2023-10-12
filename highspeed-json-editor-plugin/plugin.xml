@@ -92,6 +92,12 @@
             id="jsoneditor.editor.commands.source.formatJSON">
       </command>
       <command
+            name="Copy JSON as single line to clipboard"
+            description="Copy the current JSON de prettified as a single line to clipboard"
+            categoryId="jsoneditor.commands.category"
+            id="jsoneditor.editor.commands.source.copyJsonAsOneLineToClipboard">
+      </command>
+      <command
             name="Validate JSON"
             description="V JSON content"
             categoryId="jsoneditor.commands.category"
@@ -113,6 +119,10 @@
       <handler
             commandId="jsoneditor.editor.commands.source.formatJSON"
             class="de.jcup.hijson.handlers.FormatJSONHandler">
+      </handler>
+      <handler
+            commandId="jsoneditor.editor.commands.source.copyJsonAsOneLineToClipboard"
+            class="de.jcup.hijson.handlers.CopyJsonAsOneLineToClipboardHandler">
       </handler>
        <handler
             commandId="jsoneditor.editor.commands.source.validateJSON"
@@ -158,6 +168,8 @@
             </command>
             <command commandId="jsoneditor.editor.commands.source.formatJSON">
             </command>
+            <command commandId="jsoneditor.editor.commands.source.copyJsonAsOneLineToClipboard">
+            </command>
             <command commandId="jsoneditor.editor.commands.source.validateJSON">
             </command>
       </menuContribution>
@@ -177,6 +189,8 @@
                      </with>
                </visibleWhen>
             <command commandId="jsoneditor.editor.commands.source.formatJSON">
+            </command>
+            <command commandId="jsoneditor.editor.commands.source.copyJsonAsOneLineToClipboard">
             </command>
             <command commandId="jsoneditor.editor.commands.source.validateJSON">
             </command>

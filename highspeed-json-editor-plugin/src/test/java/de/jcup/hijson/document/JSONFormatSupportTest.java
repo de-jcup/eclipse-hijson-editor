@@ -46,5 +46,18 @@ public class JSONFormatSupportTest {
         /* test */
         assertNotNull(result);
     }
+    
+    @Test
+    public void createJSONAsOneLine() {
+        /* prepare */
+        String json = "{\n      \"name\" :\"alberts\\n  test\", \n    \"message\" :  \"test\"\n"
+                + "   }  \n";
+        
+        /* execute */
+        String oneLine = supportToTest.createJSONAsOneLine(json);
+        
+        /* test*/
+        assertEquals("{ \"name\" : \"alberts\\n  test\", \"message\" : \"test\" }", oneLine);
+    }
 
 }

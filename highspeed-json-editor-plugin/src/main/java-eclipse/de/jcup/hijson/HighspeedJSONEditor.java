@@ -713,4 +713,9 @@ public class HighspeedJSONEditor extends TextEditor implements StatusMessageSupp
         });
     }
 
+    public String createJsonAsOneLine() {
+        String json = getDocumentText();
+        return JSONFormatSupport.DEFAULT.createJSONAsOneLine(json);
+    }
+
 }

@@ -15,9 +15,10 @@
  */
 package de.jcup.hijson.document;
 
+import java.util.regex.Pattern;
+
 import com.fasterxml.jackson.core.JsonLocation;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +26,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JSONFormatSupport {
 
     private static final int MAXIMUM_POSITIONS_TO_SCAN = 2000;
-
+    
+    private static String STRING_PATTERN_SINGLE_LINE_REDUCE="\\n";
+    private static Pattern PATTERN_SINGLE_LINE_REDUCE = Pattern.compile(STRING_PATTERN_SINGLE_LINE_REDUCE);
+    private static String STRING_WHITESPACES_BEFORE_QUOTE="[ \\t\\n]+\"";
+    private static Pattern PATTERN_SPACES_BEFORE_QUOTE = Pattern.compile(STRING_WHITESPACES_BEFORE_QUOTE);
+    private static String STRING_WHITESPACES_AFTER_QUOTE="\"[ \\t\\n]+";
+    private static Pattern PATTERN_SPACES_AFTER_QUOTE = Pattern.compile(STRING_WHITESPACES_AFTER_QUOTE);
+    
+    private static String STRING_COLONS_NO_WHITESPACES_AFTER_QUOTE="\":";
+    private static Pattern PATTERN_COLONS_NO_WHITESPACES_AFTER_QUOTE= Pattern.compile(STRING_COLONS_NO_WHITESPACES_AFTER_QUOTE);
+    
+    private static String STRING_COLONS_NO_WHITESPACES_BEFORE_QUOTE=":\"";
+    private static Pattern PATTERN_COLONS_NO_WHITESPACES_BEFORE_QUOTE= Pattern.compile(STRING_COLONS_NO_WHITESPACES_BEFORE_QUOTE);
+    
     public class FormatterResult {
         private String origin;
         private String formatted;
@@ -178,6 +192,18 @@ public class JSONFormatSupport {
 
     public void validateJSON(String documentText) throws JsonProcessingException {
         mapper.readTree(documentText);
+    }
+
+    public String createJSONAsOneLine(String json) {
+        json = PATTERN_SPACES_BEFORE_QUOTE.matcher(json).replaceAll(" \"");
+        json = PATTERN_SPACES_AFTER_QUOTE.matcher(json).replaceAll("\" ");
+        
+        json = PATTERN_COLONS_NO_WHITESPACES_BEFORE_QUOTE.matcher(json).replaceAll(": \"");
+        json = PATTERN_COLONS_NO_WHITESPACES_AFTER_QUOTE.matcher(json).replaceAll("\" :");
+
+        json = PATTERN_SINGLE_LINE_REDUCE.matcher(json).replaceAll("");
+        
+        return json.trim();
     }
 
 }
