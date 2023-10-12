@@ -25,10 +25,12 @@ import com.fasterxml.jackson.core.JsonLocation;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import de.jcup.hijson.outline.Item;
 import de.jcup.hijson.outline.ItemType;
 import de.jcup.hijson.outline.ItemVariant;
+import de.jcup.hijson.outline.RootItem;
 
 public class DefaultHighspeedJSONModelBuilder implements HighSpeedJSONModelBuilder {
 
@@ -52,7 +54,7 @@ public class DefaultHighspeedJSONModelBuilder implements HighSpeedJSONModelBuild
         String currentName;
         Item currentParent;
         int tresholdGroupArrays;
-        public Item rootItem;
+        public RootItem rootItem;
     }
 
     public HighspeedJSONModel build(String json, int tresholdGroupArrays, boolean ignoreFailures) {
@@ -93,35 +95,35 @@ public class DefaultHighspeedJSONModelBuilder implements HighSpeedJSONModelBuild
                 case NOT_AVAILABLE:
                     break;
                 case START_ARRAY:
-                    Item arrayItem = addJsonNodeToParent(ItemVariant.ARRAY, context);
+                    Item arrayItem = addJsonNodeToParent(ItemVariant.ARRAY, context, token);
                     context.currentParent = arrayItem;
                     break;
 
                 case START_OBJECT:
-                    Item objectItem = addJsonNodeToParent(ItemVariant.OBJECT, context);
+                    Item objectItem = addJsonNodeToParent(ItemVariant.OBJECT, context, token);
                     context.currentParent = objectItem;
                     break;
 
                 case VALUE_EMBEDDED_OBJECT:
-                    addJsonNodeToParent(ItemVariant.OBJECT, context);
+                    addJsonNodeToParent(ItemVariant.OBJECT, context, token);
                     break;
                 case VALUE_FALSE:
-                    addJsonNodeToParent(ItemVariant.VALUE, context);
+                    addJsonNodeToParent(ItemVariant.VALUE, context, token);
                     break;
                 case VALUE_NULL:
-                    addJsonNodeToParent(ItemVariant.VALUE, context);
+                    addJsonNodeToParent(ItemVariant.VALUE, context, token);
                     break;
                 case VALUE_NUMBER_FLOAT:
-                    addJsonNodeToParent(ItemVariant.VALUE, context);
+                    addJsonNodeToParent(ItemVariant.VALUE, context, token);
                     break;
                 case VALUE_NUMBER_INT:
-                    addJsonNodeToParent(ItemVariant.VALUE, context);
+                    addJsonNodeToParent(ItemVariant.VALUE, context, token);
                     break;
                 case VALUE_STRING:
-                    addJsonNodeToParent(ItemVariant.VALUE, context);
+                    addJsonNodeToParent(ItemVariant.VALUE, context, token);
                     break;
                 case VALUE_TRUE:
-                    addJsonNodeToParent(ItemVariant.VALUE, context);
+                    addJsonNodeToParent(ItemVariant.VALUE, context, token);
                     break;
                 default:
                     break;
@@ -165,6 +167,7 @@ public class DefaultHighspeedJSONModelBuilder implements HighSpeedJSONModelBuild
         for (Iterator<Item> it = children.iterator(); it.hasNext();) {
             Item item = it.next();
             item.setName(originParentName + " [" + index + "]");
+            item.setArrayIndex(index);
             index++;
         }
     }
@@ -219,11 +222,14 @@ public class DefaultHighspeedJSONModelBuilder implements HighSpeedJSONModelBuild
         children.clear();
     }
 
-    private Item addJsonNodeToParent(ItemVariant variant, JSONContext context) {
-        Item item = new Item();
+    private Item addJsonNodeToParent(ItemVariant variant, JSONContext context, JsonToken token) {
+        Item item = context.rootItem == null ? new RootItem(): new Item();
+        
         item.setName(context.currentName);
+        item.setOriginName(context.currentName);
         item.setType(ItemType.JSON_NODE);
         item.setItemVariant(variant);
+        
         if (variant == ItemVariant.VALUE) {
             try {
                 item.setContent(context.parser.getValueAsString());
@@ -232,8 +238,8 @@ public class DefaultHighspeedJSONModelBuilder implements HighSpeedJSONModelBuild
             }
         }
 
-        if (context.rootItem == null) {
-            context.rootItem = item;
+        if (item instanceof RootItem) {
+            context.rootItem = (RootItem)item;
             context.currentParent = context.rootItem;
         } else {
             if (context.currentParent != null) {

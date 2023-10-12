@@ -1,0 +1,249 @@
+{
+  "testUnits" : [ {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 0,
+    "unit-string" : "0",
+    "unit-double" : 0.1
+  }, 
+    {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 382,
+    "unit-string" : "382",
+    "unit-double" : 382.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 383,
+    "unit-string" : "383",
+    "unit-double" : 383.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 384,
+    "unit-string" : "384",
+    "unit-double" : 384.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 385,
+    "unit-string" : "385",
+    "unit-double" : 385.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 386,
+    "unit-string" : "386",
+    "unit-double" : 386.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 387,
+    "unit-string" : "387",
+    "unit-double" : 387.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 388,
+    "unit-string" : "388",
+    "unit-double" : 388.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 389,
+    "unit-string" : "389",
+    "unit-double" : 389.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 390,
+    "unit-string" : "390",
+    "unit-double" : 390.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 391,
+    "unit-string" : "391",
+    "unit-double" : 391.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 392,
+    "unit-string" : "392",
+    "unit-double" : 392.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 393,
+    "unit-string" : "393",
+    "unit-double" : 393.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 394,
+    "unit-string" : "394",
+    "unit-double" : 394.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 395,
+    "unit-string" : "395",
+    "unit-double" : 395.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 396,
+    "unit-string" : "396",
+    "unit-double" : 396.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 397,
+    "unit-string" : "397",
+    "unit-double" : 397.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 398,
+    "unit-string" : "398",
+    "unit-double" : 398.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 399,
+    "unit-string" : "399",
+    "unit-double" : 399.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 400,
+    "unit-string" : "400",
+    "unit-double" : 400.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 401,
+    "unit-string" : "401",
+    "unit-double" : 401.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 402,
+    "unit-string" : "402",
+    "unit-double" : 402.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 403,
+    "unit-string" : "403",
+    "unit-double" : 403.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 404,
+    "unit-string" : "404",
+    "unit-double" : 404.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 405,
+    "unit-string" : "405",
+    "unit-double" : 405.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 406,
+    "unit-string" : "406",
+    "unit-double" : 406.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 407,
+    "unit-string" : "407",
+    "unit-double" : 407.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 408,
+    "unit-string" : "408",
+    "unit-double" : 408.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 409,
+    "unit-string" : "409",
+    "unit-double" : 409.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 410,
+    "unit-string" : "410",
+    "unit-double" : 410.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 411,
+    "unit-string" : "411",
+    "unit-double" : 411.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 412,
+    "unit-string" : "412",
+    "unit-double" : 412.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 413,
+    "unit-string" : "413",
+    "unit-double" : 413.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 414,
+    "unit-string" : "414",
+    "unit-double" : 414.1
+  }, {
+    "unit-null" : null,
+    "unit-boolean-true" : true,
+    "unit-boolean-false" : false,
+    "unit-long" : 415,
+    "unit-string" : "415",
+    "unit-double" : 415.1
+  } ]
+}

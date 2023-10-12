@@ -23,12 +23,13 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import de.jcup.hijson.outline.Item;
+import de.jcup.hijson.outline.RootItem;
 
 public class HighspeedJSONModel {
 
     private List<HighspeedJSONError> errors;
     private JsonNode rootNode;
-    private Item rootItem;
+    private RootItem rootItem;
     private Map<Integer, Item> itemOffsetMap;
 
     public HighspeedJSONModel() {
@@ -52,11 +53,11 @@ public class HighspeedJSONModel {
         this.rootNode = rootNode;
     }
 
-    public void setRootItem(Item item) {
+    public void setRootItem(RootItem item) {
         this.rootItem = item;
     }
 
-    public Item getRootItem() {
+    public RootItem getRootItem() {
         return rootItem;
     }
 

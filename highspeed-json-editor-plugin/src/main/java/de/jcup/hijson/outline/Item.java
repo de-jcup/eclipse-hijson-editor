@@ -22,6 +22,17 @@ import java.util.List;
 public class Item {
 
     ItemVariant itemVariant;
+    ItemType type;
+    String name;
+    String variant;
+    int offset;
+    int length;
+    int endOffset;
+    Item parent;
+    List<Item> children = Collections.emptyList(); // initial only empty list
+    private String content;
+    private String originName;
+    private int arrayIndex=-1;
 
     public ItemVariant getItemVariant() {
         return itemVariant;
@@ -40,16 +51,6 @@ public class Item {
     public Item getParent() {
         return parent;
     }
-
-    ItemType type;
-    String name;
-    String variant;
-    int offset;
-    int length;
-    int endOffset;
-    Item parent;
-    List<Item> children = Collections.emptyList(); // initial only empty list
-    private String content;
 
     /**
      * @return item type , or <code>null</code>
@@ -156,6 +157,34 @@ public class Item {
 
     public String buildSearchString() {
         return name;
+    }
+
+    public boolean hasChildren() {
+        return children.size() > 0;
+    }
+
+    public boolean isRoot() {
+        return false;
+    }
+
+    public void setOriginName(String name) {
+        this.originName=name;
+    }
+    
+    public String getOriginName() {
+        return originName;
+    }
+
+    public void setArrayIndex(int index) {
+        this.arrayIndex=index;
+    }
+    
+    public int getArrayIndex() {
+        return arrayIndex;
+    }
+    
+    public boolean isPartOfArray() {
+        return arrayIndex!=-1;
     }
 
 }

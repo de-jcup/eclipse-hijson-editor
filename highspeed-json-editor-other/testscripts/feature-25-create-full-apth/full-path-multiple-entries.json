@@ -1,0 +1,21 @@
+[ 
+    {
+        "field" : "name1",
+        
+        "simple-array" : [ 
+            { "target": "test"} ,
+            { "target": "prod"}
+        ],
+        "matrix-array" : [ 
+            [
+                { "target": "test"} ,
+                { "target": "prod"}
+            ],
+             [
+                { "target": "int"} ,
+                { "target": "playground"}
+            ]
+        ] 
+    }
+    
+]

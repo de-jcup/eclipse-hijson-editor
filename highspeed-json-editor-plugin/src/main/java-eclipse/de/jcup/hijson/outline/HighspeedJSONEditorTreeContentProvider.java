@@ -15,6 +15,11 @@
  */
 package de.jcup.hijson.outline;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.jface.viewers.ITreeContentProvider;
 
 import de.jcup.hijson.script.HighspeedJSONModel;
@@ -93,6 +98,49 @@ public class HighspeedJSONEditorTreeContentProvider implements ITreeContentProvi
             }
             items = new Item[] { item };
         }
+    }
+
+    public String createFullPath(Item lastItem) {
+
+        StringBuilder sb = new StringBuilder();
+        List<Item> itemList = new ArrayList<Item>();
+        Item render = lastItem;
+        while (render != null) {
+            if (!render.isRoot()) {
+                itemList.add(render);
+            }
+            render = render.getParent();
+        }
+        Collections.reverse(itemList);
+
+        int count = 0;
+        for (Iterator<Item> it = itemList.iterator(); it.hasNext();) {
+            count++;
+            Item item = it.next();
+            if (item.getType().equals(ItemType.VIRTUAL_ARRAY_SEGMENT_NODE)) {
+                continue;
+            }
+            if (count>1) {
+                boolean renderDot = true;// !item.getItemVariant().equals(ItemVariant.ARRAY);
+                if (renderDot) {
+                    sb.append('.');
+                }
+            }
+            String name = item.getOriginName();
+            if (item.isPartOfArray()) {
+                sb.append('[');
+                sb.append(item.getArrayIndex());
+                sb.append(']');
+            }else {
+                sb.append(name);
+            }
+            
+        }
+        String path = sb.toString();
+        path = path.replaceAll("\\.\\.", ".");
+        path = path.replaceAll("\\.\\[", "[");
+        return path;
+
     }
 
     public Item tryToFindByOffset(int offset) {
