@@ -40,6 +40,7 @@ public class JSONFormatSupport {
     private static String STRING_COLONS_NO_WHITESPACES_BEFORE_QUOTE=":\"";
     private static Pattern PATTERN_COLONS_NO_WHITESPACES_BEFORE_QUOTE= Pattern.compile(STRING_COLONS_NO_WHITESPACES_BEFORE_QUOTE);
     
+    
     public class FormatterResult {
         private String origin;
         private String formatted;
@@ -69,7 +70,7 @@ public class JSONFormatSupport {
         }
 
     }
-
+    
     public enum FormatterResultState {
 
         KEPT_AS_IS,
